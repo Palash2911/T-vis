@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   padding: EdgeInsets.all(10.0),
                   decoration: kBorder,
-                  child: Image.asset('images/Qr.png'),
+                  child: Image.asset('assets/images/Qr.png'),
                 ),
               ),
             ],

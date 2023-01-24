@@ -17,6 +17,7 @@ class Tvis extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: bottomNavBar(),
       // home: RegisterScreen(),
+      // home: LoginScreen(),
     );
   }
 }
