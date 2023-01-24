@@ -46,6 +46,8 @@ class _bottomNavBarState extends State<bottomNavBar> {
         color: kPrimaryColor,
         backgroundColor: kSecondaryColor,
         items: _icons,
+        animationCurve: Curves.easeInOut,
+        animationDuration: const Duration(milliseconds: 360),
         onTap: (index) {
           setState(() {
             _page = index;

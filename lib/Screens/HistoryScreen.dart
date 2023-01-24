@@ -24,7 +24,7 @@ class HistoryPage extends StatelessWidget {
                 children: [
                   Container(
                     margin:
-                        EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+                        EdgeInsets.symmetric(horizontal: 32.0, vertical: 15.0),
                     decoration: kBorder,
                     child: Card(
                       elevation: 0.0,
@@ -51,13 +51,15 @@ class HistoryPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 20.0,
+                    ),
                     decoration: kBorder,
                     child: Card(
                       elevation: 0.0,
                       child: Column(
-                        children: [
+                        children: const [
                           StatusTile(),
                           StatusTile(),
                           StatusTile(),

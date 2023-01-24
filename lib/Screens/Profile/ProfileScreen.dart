@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         'Sign Out',
                         style: ktitleTextStyle,
                       ),
-                      subtitle: Text('get the fuck out off here'),
+                      subtitle: Text('Done'),
                       trailing: Icon(Icons.arrow_forward_ios_rounded),
                     ),
                   ),

@@ -9,8 +9,8 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(32.0),
-      padding: EdgeInsets.all(20.0),
+      margin: const EdgeInsets.all(32.0),
+      padding: const EdgeInsets.all(20.0),
       decoration: kBorder,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -30,12 +30,17 @@ class ProfileCard extends StatelessWidget {
               ),
             ],
           ),
-          CircleAvatar(
-            backgroundImage: AssetImage(
-              'images/profile.png',
-            ),
-            radius: 70,
-          )
+          Container(
+            margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
+            height: 100,
+            width: 100,
+            child: const CircleAvatar(
+              backgroundImage: AssetImage(
+                'assets/images/profile.png',
+              ),
+              radius: 70,
+            )
+          ),
         ],
       ),
     );
