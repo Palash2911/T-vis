@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tvis/Screens/LoginScreen.dart';
+import 'package:tvis/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -8,82 +11,110 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   String? _selectedCollege;
   final _formKey = GlobalKey<FormState>();
-
+// TODO: Add text editing Controllers
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 160.0,
-                child: Image.asset("images/register.png"),
-              ),
-              Text("Register"),
-              Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          labelText: 'Mobile Number'),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          labelText: 'Name'),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          labelText: 'Vehicle Number'),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          labelText: 'Vehicle Name'),
-                    ),
-                    DropdownButtonFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          labelText: 'College Name'),
-                      value: _selectedCollege,
-                      items: ['DYPCOE', 'DYPIMR', 'DYPARC'].map((college) {
-                        return DropdownMenuItem(
-                          value: college,
-                          child: Text(college),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          // _selectedCollege = value!;
-                        });
-                      },
-                    ),
-                    Container(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Generate OTP'),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text("Already have an account?"),
-                    )
-                  ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+            child: Column(
+              children: [
+                Container(
+                  height: 160.0,
+                  child: Lottie.asset("assets/animations/register.json"),
                 ),
-              ),
-            ],
+                Text(
+                  "Register",
+                  style: kh1TextStyle,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(height: 20),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Name',
+                          prefixIcon: Icon(Icons.person),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Mobile Number',
+                          prefixIcon: Icon(Icons.phone),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Vehicle Name',
+                          prefixIcon: Icon(Icons.car_crash_rounded),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Vehicle Number',
+                          prefixIcon: Icon(Icons.numbers_rounded),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      DropdownButtonFormField(
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.business),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            labelText: 'College Name'),
+                        value: _selectedCollege,
+                        items: ['DYPCOE', 'DYPIMR', 'DYPARC'].map((college) {
+                          return DropdownMenuItem(
+                            value: college,
+                            child: Text(college),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            // _selectedCollege = value;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 60.0,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Generate OTP'),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
+                          );
+                        },
+                        child: Text("Already have an account?"),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

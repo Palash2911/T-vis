@@ -15,6 +15,9 @@ Decoration kBorder = BoxDecoration(
     borderRadius: BorderRadius.circular(20));
 
 // TextStyles - main
+TextStyle kh1TextStyle =
+    GoogleFonts.poppins(fontSize: 36.0, fontWeight: FontWeight.bold);
+// TextStyles - main
 TextStyle kNameTextStyle =
     GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.bold);
 TextStyle KAccountTextStyle =
