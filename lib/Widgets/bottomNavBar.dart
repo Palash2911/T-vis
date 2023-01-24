@@ -19,7 +19,7 @@ class _bottomNavBarState extends State<bottomNavBar> {
     HistoryPage(),
     ProfilePage(),
   ];
-  int _page = 1;
+  int _page = 0;
   @override
   Widget build(BuildContext context) {
     final _icons = <Widget>[

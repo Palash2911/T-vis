@@ -21,10 +21,12 @@ class ProfileCard extends StatelessWidget {
               Text(
                 'Your Name',
                 style: kNameTextStyle,
+                overflow: TextOverflow.ellipsis,
               ),
               Text(
                 'Your Account No',
                 style: KAccountTextStyle,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
