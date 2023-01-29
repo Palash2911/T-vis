@@ -37,6 +37,13 @@
             {
               "client_id": "714610393483-1bda9keh1n7oi5hhdp6etaon0bjcgurn.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "714610393483-4ji40ejhv9tvt62t7coi0gcm5hn848a0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tvis"
+              }
             }
           ]
         }
