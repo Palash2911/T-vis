@@ -3,6 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'package:tvis/Screens/LoginScreen.dart';
 import 'package:tvis/constants.dart';
 
+import '../Services/firebaseAuth.dart';
+
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -105,7 +107,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
+                              builder: (context) => LoginScreen(
+                                auth: Auth(),
+                              ),
+                            ),
                           );
                         },
                         child: Text("Already have an account?"),
