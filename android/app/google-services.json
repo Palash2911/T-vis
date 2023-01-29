@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "714610393483",
+    "project_id": "tvis-d8f5a",
+    "storage_bucket": "tvis-d8f5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714610393483:android:fefa90450cd0ba3d02ef8e",
+        "android_client_info": {
+          "package_name": "com.example.tvis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714610393483-8k3ribubed84cnjaokoa5cg7l5lq9qo2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tvis",
+            "certificate_hash": "76b170dd274f35aa15c985d263c2bed3330a15a3"
+          }
+        },
+        {
+          "client_id": "714610393483-1bda9keh1n7oi5hhdp6etaon0bjcgurn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPGQjz8FQGPxjT3by1x4Q-hSY2opdh6oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714610393483-1bda9keh1n7oi5hhdp6etaon0bjcgurn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
