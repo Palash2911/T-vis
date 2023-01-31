@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:tvis/Screens/LoginScreen.dart';
 import 'package:tvis/Screens/Profile/ProfileDetailsScreen.dart';
 import 'package:tvis/Screens/Profile/VechicalDetailsScreen.dart';
 import 'package:tvis/constants.dart';
 import 'package:tvis/Widgets/profileCard.dart';
 
+import '../../Services/firebaseAuth.dart';
+
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  ProfilePage({required this.auth});
+  final Auth auth;
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  void signOut(BuildContext ctx) async {
+    await widget.auth.signOut();
+    Navigator.pushReplacement(
+      ctx,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(
+          auth: widget.auth,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,6 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       subtitle: Text('Done'),
                       trailing: Icon(Icons.arrow_forward_ios_rounded),
+                      onTap: () => signOut(context),
                     ),
                   ),
                 ],

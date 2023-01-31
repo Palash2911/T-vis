@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:tvis/Screens/HomeScreen.dart';
 import 'package:tvis/Screens/HistoryScreen.dart';
+import 'package:tvis/Services/firebaseAuth.dart';
 import 'package:tvis/constants.dart';
 
 import '../Screens/Profile/ProfileScreen.dart';
 
 class bottomNavBar extends StatefulWidget {
-  const bottomNavBar({super.key});
 
   @override
   State<bottomNavBar> createState() => _bottomNavBarState();
@@ -17,7 +17,9 @@ class _bottomNavBarState extends State<bottomNavBar> {
   final screens = [
     HomePage(),
     HistoryPage(),
-    ProfilePage(),
+    ProfilePage(
+      auth: Auth(),
+    ),
   ];
   int _page = 0;
   @override

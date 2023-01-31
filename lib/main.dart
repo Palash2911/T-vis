@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tvis/Screens/LoginScreen.dart';
+import 'package:tvis/Widgets/bottomNavBar.dart';
 import 'Services/firebaseAuth.dart';
 
 void main() async{
@@ -14,9 +16,9 @@ class Tvis extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(
+      home: FirebaseAuth.instance.currentUser?.uid == null ? LoginScreen(
         auth: Auth(),
-      ),
+      ):bottomNavBar()
       // home: RegisterScreen(),
       // home: LoginScreen(),
     );
