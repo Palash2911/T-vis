@@ -4,16 +4,40 @@ import 'package:tvis/Screens/LoginScreen.dart';
 import 'package:tvis/constants.dart';
 
 import '../Services/firebaseAuth.dart';
+import '../Widgets/bottomNavBar.dart';
 
 class RegisterScreen extends StatefulWidget {
+  RegisterScreen({required this.auth});
+  final AuthClass auth;
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String? _selectedCollege;
   final _formKey = GlobalKey<FormState>();
-// TODO: Add text editing Controllers
+  final TextEditingController _namecontroller = TextEditingController();
+  final TextEditingController _vehNocontroller = TextEditingController();
+  final TextEditingController _vehNamecontroller = TextEditingController();
+  String get name => _namecontroller.text;
+  String get vehNo => _vehNocontroller.text;
+  String get vehName => _vehNamecontroller.text;
+  String ?cllg;
+
+  Future<void> register(BuildContext ctx) async {
+    var user = await widget.auth.registerUser(name, vehNo, vehName, "cllg");
+    if (user) {
+      Navigator.push(
+        ctx,
+        MaterialPageRoute(builder: (context) => bottomNavBar()),
+      );
+    }
+    else
+      {
+        print("Something Went Wrong");
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: 160.0,
                   child: Lottie.asset("assets/animations/register.json"),
                 ),
@@ -37,83 +61,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
+                        controller: _namecontroller,
                         decoration: InputDecoration(
                           labelText: 'Name',
-                          prefixIcon: Icon(Icons.person),
+                          prefixIcon: const Icon(Icons.person),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Mobile Number',
-                          prefixIcon: Icon(Icons.phone),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      TextFormField(
+                        controller: _vehNamecontroller,
                         decoration: InputDecoration(
                           labelText: 'Vehicle Name',
-                          prefixIcon: Icon(Icons.car_crash_rounded),
+                          prefixIcon: const Icon(Icons.car_crash_rounded),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
+                        controller: _vehNocontroller,
                         decoration: InputDecoration(
                           labelText: 'Vehicle Number',
-                          prefixIcon: Icon(Icons.numbers_rounded),
+                          prefixIcon: const Icon(Icons.numbers_rounded),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       DropdownButtonFormField(
                         decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.business),
+                            prefixIcon: const Icon(Icons.business),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             labelText: 'College Name'),
-                        value: _selectedCollege,
+                        value: cllg,
                         items: ['DYPCOE', 'DYPIMR', 'DYPARC'].map((college) {
                           return DropdownMenuItem(
                             value: college,
                             child: Text(college),
                           );
                         }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            // _selectedCollege = value;
-                          });
-                        },
+                        onChanged: (value) {},
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: double.infinity,
                         height: 60.0,
                         child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Generate OTP'),
+                          onPressed: () => register(context),
+                          child: const Text('Create Profile'),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginScreen(
-                                auth: Auth(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text("Already have an account?"),
                       ),
                     ],
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvis/Screens/HomeScreen.dart';
+import 'package:tvis/Widgets/bottomNavBar.dart';
 
 import '../../Services/firebaseAuth.dart';
 import '../../constants.dart';
@@ -32,14 +33,19 @@ class _OtpScreenState extends State<OtpScreen> {
       if (isVerified == true) {
         var isUser = await widget.auth.checkUser();
         if (isUser) {
+          print("Hello");
           Navigator.push(
             ctx,
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => bottomNavBar()),
           );
         } else {
+          print("noHello");
           Navigator.push(
             ctx,
-            MaterialPageRoute(builder: (context) => RegisterScreen()),
+            MaterialPageRoute(
+                builder: (context) => RegisterScreen(
+                      auth: Auth(),
+                    )),
           );
         }
       } else {
@@ -91,15 +97,6 @@ class _OtpScreenState extends State<OtpScreen> {
                     child: const Text('Verify OTP'),
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    );
-                  },
-                  child: const Text("Dont have an account ? Create one "),
-                )
               ],
             ),
           ),

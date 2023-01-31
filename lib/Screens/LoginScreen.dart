@@ -80,15 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text('Generate OTP'),
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    );
-                  },
-                  child: const Text("Dont have an account ? Create one "),
-                )
               ],
             ),
           ),

@@ -12,6 +12,8 @@ abstract class AuthClass {
   Future<void> signOut();
   Future<bool> verifyOtp(String otp);
   Future<bool> checkUser();
+  Future<bool> registerUser(
+      String name, String vehicleNo, String vehicleName, String college);
 }
 
 class Auth implements AuthClass {
@@ -35,7 +37,7 @@ class Auth implements AuthClass {
   Future<void> signInPhone(String phoneNo) async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNo,
-      verificationCompleted: (PhoneAuthCredential credential){
+      verificationCompleted: (PhoneAuthCredential credential) {
         // await _auth.signInWithCredential(credential).then((value) async {
         //     print("verficationCompleted  :  Logged in");
         //    });
@@ -61,7 +63,7 @@ class Auth implements AuthClass {
       verificationId: this.verificationId,
       smsCode: otp,
     ));
-    return cred.user!=null ? true : false;
+    return cred.user != null ? true : false;
   }
 
   @override
@@ -70,16 +72,35 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<bool> checkUser() async{
+  Future<bool> checkUser() async {
     var user = true;
     final auth = FirebaseAuth.instance.currentUser;
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     await users.doc(auth?.uid).get().then((datasnapshot) => {
-      if(!datasnapshot.exists)
-        {
-            user = false
-        }
-    });
+          if (!datasnapshot.exists) {user = false}
+        });
     return user;
+  }
+
+  @override
+  Future<bool> registerUser(
+      String name, String vehicleNo, String vehicleName, String college) async {
+    try {
+      final auth = FirebaseAuth.instance.currentUser;
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      print(auth?.uid.toString());
+      users.doc(auth?.uid).set({
+        'Name': name,
+        'VehicleNo': vehicleNo,
+        'VehicleName': vehicleName,
+        'College': college,
+        'UserID': auth?.uid,
+      });
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }
