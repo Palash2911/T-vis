@@ -42,6 +42,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text("Profile Details"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
@@ -54,16 +55,9 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(32.0, 32.0, 0.0, 0.0),
-                child: Text(
-                  'Profile Details',
-                  style: kNameTextStyle,
-                ),
-              ),
               Container(
                 margin: const EdgeInsets.symmetric(
-                    horizontal: 32.0, vertical: 10.0),
+                    horizontal: 32.0, vertical: 50.0),
                 decoration: kBorder,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

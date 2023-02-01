@@ -40,6 +40,7 @@ class _vehicleDetailsPageState extends State<vehicleDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text("Vehicle Details"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
@@ -52,16 +53,9 @@ class _vehicleDetailsPageState extends State<vehicleDetailsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(32.0, 32.0, 0.0, 0.0),
-                child: Text(
-                  'Vehicle Details',
-                  style: kNameTextStyle,
-                ),
-              ),
               Container(
                 margin: const EdgeInsets.symmetric(
-                    horizontal: 32.0, vertical: 10.0),
+                    horizontal: 32.0, vertical: 50.0),
                 decoration: kBorder,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
