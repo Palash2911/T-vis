@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,6 +16,10 @@ abstract class AuthClass {
   Future<bool> checkUser();
   Future<Map<String, Object>> registerUser(
       String name, String vehicleNo, String vehicleName, String college);
+  Future<bool> updateUser(
+      String name, String phoneNo, String college);
+  Future<bool> updateVehicle(
+      String vname, String vNo);
   Future<Map<String, String>> getUserDetails();
 }
 
@@ -38,10 +44,8 @@ class Auth implements AuthClass {
   Future<void> signInPhone(String phoneNo) async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNo,
-      verificationCompleted: (PhoneAuthCredential credential) {
-        // await _auth.signInWithCredential(credential).then((value) async {
-        //     print("verficationCompleted  :  Logged in");
-        //    });
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        // await _auth.signInWithCredential(credential).then((value) {});
       },
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
@@ -96,6 +100,7 @@ class Auth implements AuthClass {
         'VehicleNo': vehicleNo,
         'VehicleName': vehicleName,
         'College': college,
+        'PhoneNo': auth?.phoneNumber,
         'UserID': auth?.uid,
         'Status': false,
       });
@@ -111,21 +116,61 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<Map<String, String>> getUserDetails() async{
+  Future<Map<String, String>> getUserDetails() async {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     String name = "";
     String? num = "";
     String cllg = "";
+    String vname = "";
+    String vno = "";
     num = _auth.currentUser?.phoneNumber;
-    await users.doc(_auth.currentUser?.uid).get().then((DocumentSnapshot query) {
+    await users
+        .doc(_auth.currentUser?.uid)
+        .get()
+        .then((DocumentSnapshot query) {
       Map<String, dynamic> data = query.data() as Map<String, dynamic>;
       name = data["Name"].toString();
       cllg = data["College"].toString();
+      vname = data["VehicleName"].toString();
+      vno = data["VehicleNo"].toString();
     });
     return {
       'name': name,
-      'num' : num.toString(),
+      'num': num.toString(),
       'cllg': cllg,
+      'vname': vname,
+      'vno': vno,
     };
+  }
+
+  @override
+  Future<bool> updateUser(String name, String phoneNo, String college) async{
+    try{
+      CollectionReference users = FirebaseFirestore.instance.collection('Users');
+      users.doc(_auth.currentUser?.uid).update({
+        "Name": name,
+        "PhoneNo": phoneNo,
+        "College": college,
+      });
+      return true;
+    }catch(e){
+      print(e);
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> updateVehicle(String vname, String vNo) async{
+    try{
+      CollectionReference users = FirebaseFirestore.instance.collection('Users');
+      users.doc(_auth.currentUser?.uid).update({
+        'VehicleNo': vNo,
+        'VehicleName': vname,
+      });
+      return true;
+    }catch(e){
+      print(e);
+      return false;
+    }
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tvis/Screens/HomeScreen.dart';
 import 'package:tvis/Widgets/bottomNavBar.dart';
 
 import '../../Services/firebaseAuth.dart';
 import '../../constants.dart';
-import '../RegisterScreen.dart';
+import './RegisterScreen.dart';
 
 class OtpScreen extends StatefulWidget {
   OtpScreen({required this.auth});
@@ -23,6 +23,14 @@ class _OtpScreenState extends State<OtpScreen> {
   void initState() {
     _otpcontroller.text = "";
     //set the initial value of text field
+    Fluttertoast.showToast(
+      msg: "OTP Sent Successfully",
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
     super.initState();
   }
 
@@ -33,20 +41,23 @@ class _OtpScreenState extends State<OtpScreen> {
       if (isVerified == true) {
         var isUser = await widget.auth.checkUser();
         if (isUser) {
-          print("Hello");
-          Navigator.push(
-            ctx,
-            MaterialPageRoute(builder: (context) => bottomNavBar()),
-          );
+          if (ctx.mounted) {
+            Navigator.pushReplacement(
+              ctx,
+              MaterialPageRoute(builder: (context) => bottomNavBar()),
+            );
+          }
         } else {
-          print("noHello");
-          Navigator.push(
-            ctx,
-            MaterialPageRoute(
+          if (ctx.mounted) {
+            Navigator.pushReplacement(
+              ctx,
+              MaterialPageRoute(
                 builder: (context) => RegisterScreen(
-                      auth: Auth(),
-                    )),
-          );
+                  auth: Auth(),
+                ),
+              ),
+            );
+          }
         }
       } else {
         print("Something went wrong");

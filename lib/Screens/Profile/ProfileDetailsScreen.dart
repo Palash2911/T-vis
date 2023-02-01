@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tvis/constants.dart';
-import 'package:tvis/Widgets/profileCard.dart';
 
 import '../../Services/firebaseAuth.dart';
 
@@ -13,22 +13,29 @@ class ProfileDetailsPage extends StatefulWidget {
 }
 
 class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
-
-  String name = "Your Name";
-  String num = "000";
-  String cllg = "";
+  final TextEditingController _namecontroller = TextEditingController();
+  final TextEditingController _phoneNocontroller = TextEditingController();
+  final TextEditingController _collegecontroller = TextEditingController();
+  String get name => _namecontroller.text;
+  String get phoneNo => _phoneNocontroller.text;
+  String get cllg => _collegecontroller.text;
   @override
   void initState() {
     getDetails();
   }
 
-  Future<void> getDetails() async{
+  Future<void> getDetails() async {
     var temp = await widget.auth.getUserDetails();
     setState(() {
-      name = temp['name'].toString();
-      num = temp['num'].toString();
-      cllg = temp['cllg'].toString();
+      _namecontroller.text = temp['name'].toString();
+      _phoneNocontroller.text = temp['num'].toString();
+      _collegecontroller.text = temp['cllg'].toString();
     });
+  }
+
+  Future<bool> updateDetails() async{
+      var update = await widget.auth.updateUser(name, phoneNo, cllg);
+      return update;
   }
 
   @override
@@ -36,108 +43,165 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded),
+          icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(32.0, 32.0, 0.0, 0.0),
-              child: Text(
-                'Profile Details',
-                style: kNameTextStyle,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(32.0, 32.0, 0.0, 0.0),
+                child: Text(
+                  'Profile Details',
+                  style: kNameTextStyle,
+                ),
               ),
-            ),
-            // ProfileCard(
-            //   auth: Auth(),
-            // ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
-              decoration: kBorder,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Card(
-                    elevation: 0.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          RichText(
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'Name: ',
-                                  style: kprofileDescriptionText,
-                                ),
-                                TextSpan(
-                                  text: name,
-                                  style: kprofileDescriptionText.merge(
-                                    TextStyle(fontWeight: FontWeight.normal),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 32.0, vertical: 10.0),
+                decoration: kBorder,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Card(
+                      elevation: 0.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Name',
+                                    style: kprofileDescriptionText,
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 8.0),
-                          RichText(
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'Number: ',
-                                  style: kprofileDescriptionText,
-                                ),
-                                TextSpan(
-                                  text: num,
-                                  style: kprofileDescriptionText.merge(
-                                    const TextStyle(fontWeight: FontWeight.w100),
+                            const SizedBox(height: 8.0),
+                            TextField(
+                              controller: _namecontroller,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.person),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Number: ',
+                                    style: kprofileDescriptionText,
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 8.0),
-                          RichText(
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'College: ',
-                                  style: kprofileDescriptionText,
-                                ),
-                                TextSpan(
-                                  text: cllg,
-                                  style: kprofileDescriptionText.copyWith(
-                                      fontWeight: FontWeight.normal),
-                                ),
-                              ],
+                            const SizedBox(height: 9.0),
+                            TextField(
+                              controller: _phoneNocontroller,
+                              decoration: InputDecoration(
+                                counterText: '',
+                                prefixIcon: const Icon(Icons.phone),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              keyboardType: TextInputType.phone,
+                              maxLength: 13,
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 8.0),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'College: ',
+                                    style: kprofileDescriptionText,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 9.0),
+                            DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.business),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              value: cllg.isEmpty?null:cllg,
+                              items:
+                                  ['DYPCOE', 'DYPIMR', 'DYPARC'].map((college) {
+                                return DropdownMenuItem(
+                                  value: college,
+                                  child: Text(college),
+                                  onTap: () {
+                                    setState(() {
+                                      _collegecontroller.text = college;
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                              onChanged: (value) {},
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      child: const Text("Save Details"),
-                      onPressed: () {
-                        // code to handle change request
-                      },
-                    ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ElevatedButton(
+                        onPressed: () async{
+                          var up = await updateDetails();
+                          if(up)
+                            {
+                              Fluttertoast.showToast(
+                                  msg: "Updated Successfully",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                              );
+                            }
+                          else
+                            {
+                              Fluttertoast.showToast(
+                                msg: "Some error occured",
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                            }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: Text(
+                            "Save Details",
+                            style: kprofileDescriptionText.merge(const TextStyle(
+                              color: Colors.white,
+                            )),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
-// TODO : Change weight of Other text to normal from bold

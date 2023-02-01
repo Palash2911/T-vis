@@ -39,10 +39,16 @@ class _ProfileCardState extends State<ProfileCard> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                name,
-                style: kNameTextStyle,
-                overflow: TextOverflow.ellipsis,
+              Container(
+                width: 130,
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    name,
+                    style: kNameTextStyle,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
               // Text(
               //   'Your Account No',

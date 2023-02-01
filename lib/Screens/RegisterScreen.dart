@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tvis/Screens/LoginScreen.dart';
 import 'package:tvis/constants.dart';
 
 import '../Services/firebaseAuth.dart';
@@ -19,23 +18,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _namecontroller = TextEditingController();
   final TextEditingController _vehNocontroller = TextEditingController();
   final TextEditingController _vehNamecontroller = TextEditingController();
-  String get name => _namecontroller.text;
   String get vehNo => _vehNocontroller.text;
+  String get name => _namecontroller.text;
   String get vehName => _vehNamecontroller.text;
-  String ?cllg;
+  String? cllg;
 
   Future<void> register(BuildContext ctx) async {
-    var user = await widget.auth.registerUser(name, vehNo, vehName, cllg.toString());
+    var user =
+        await widget.auth.registerUser(name, vehNo, vehName, cllg.toString());
     if (user.isNotEmpty) {
-      Navigator.push(
-        ctx,
-        MaterialPageRoute(builder: (context) => bottomNavBar()),
-      );
-    }
-    else
-      {
-        print("Something Went Wrong");
+      if (ctx.mounted) {
+        Navigator.pushReplacement(
+          ctx,
+          MaterialPageRoute(
+            builder: (context) => bottomNavBar(),
+          ),
+        );
       }
+    } else {
+      print("Something Went Wrong");
+    }
   }
 
   @override
@@ -76,27 +78,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _vehNamecontroller,
                         decoration: InputDecoration(
                           labelText: 'Vehicle Name',
-                          prefixIcon: const Icon(Icons.car_crash_rounded),
+                          prefixIcon: const Icon(Icons.directions_car),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        controller: _vehNocontroller,
-                        decoration: InputDecoration(
-                          labelText: 'Vehicle Number',
-                          prefixIcon: const Icon(Icons.numbers_rounded),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
+                          controller: _vehNocontroller,
+                          decoration: InputDecoration(
+                            labelText: 'Vehicle Number',
+                            prefixIcon: const Icon(Icons.numbers_rounded),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
                           onChanged: (value) {
                             _vehNocontroller.value = TextEditingValue(
                                 text: value.toUpperCase(),
-                                selection: _vehNocontroller.selection
-                            );
-                          }
-                      ),
+                                selection: _vehNocontroller.selection);
+                          }),
                       const SizedBox(height: 20),
                       DropdownButtonFormField(
                         decoration: InputDecoration(

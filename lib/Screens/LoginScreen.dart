@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tvis/Screens/Profile/OtpScreen.dart';
-import 'package:tvis/Screens/RegisterScreen.dart';
+import 'package:tvis/Screens/OtpScreen.dart';
 import 'package:tvis/constants.dart';
 
 import '../Services/firebaseAuth.dart';
@@ -15,7 +15,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   TextEditingController _phonecontroller = TextEditingController();
   String get phoneNo => "+91${_phonecontroller.text}";
 
@@ -26,13 +25,16 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  void sendOtp(BuildContext ctx){
-    print(phoneNo.length);
+  void sendOtp(BuildContext ctx) {
     if (phoneNo.length == 13) {
       widget.auth.signInPhone(phoneNo);
-      Navigator.push(
+      Navigator.pushReplacement(
         ctx,
-        MaterialPageRoute(builder: (context) => OtpScreen(auth: widget.auth,)),
+        MaterialPageRoute(
+          builder: (context) => OtpScreen(
+            auth: widget.auth,
+          ),
+        ),
       );
     } else {
       const SnackBar(content: Text("Invalid Number"));
