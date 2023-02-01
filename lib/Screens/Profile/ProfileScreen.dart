@@ -4,7 +4,6 @@ import 'package:tvis/Screens/Profile/ProfileDetailsScreen.dart';
 import 'package:tvis/Screens/Profile/VechicalDetailsScreen.dart';
 import 'package:tvis/constants.dart';
 import 'package:tvis/Widgets/profileCard.dart';
-
 import '../../Services/firebaseAuth.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -78,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     elevation: 0.0,
                     child: ListTile(
                       leading: Icon(
-                        Icons.account_circle,
+                        Icons.no_crash_rounded,
                         size: 50.0,
                         color: kPrimaryColor,
                       ),
@@ -103,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     elevation: 0.0,
                     child: ListTile(
                       leading: Icon(
-                        Icons.account_circle,
+                        Icons.logout_rounded,
                         size: 50.0,
                         color: kPrimaryColor,
                       ),
