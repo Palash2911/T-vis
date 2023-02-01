@@ -14,7 +14,7 @@ abstract class AuthClass {
   Future<bool> checkUser();
   Future<bool> registerUser(
       String name, String vehicleNo, String vehicleName, String college);
-  Future<String> getUserDetails();
+  Future<Map<String, String>> getUserDetails();
 }
 
 class Auth implements AuthClass {
@@ -106,13 +106,21 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<String> getUserDetails() async{
+  Future<Map<String, String>> getUserDetails() async{
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     String name = "";
+    String? num = "";
+    String cllg = "";
+    num = _auth.currentUser?.phoneNumber;
     await users.doc(_auth.currentUser?.uid).get().then((DocumentSnapshot query) {
       Map<String, dynamic> data = query.data() as Map<String, dynamic>;
       name = data["Name"].toString();
+      cllg = data["College"].toString();
     });
-    return name;
+    return {
+      'name': name,
+      'num' : num.toString(),
+      'cllg': cllg,
+    };
   }
 }

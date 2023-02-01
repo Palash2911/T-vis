@@ -23,7 +23,7 @@ class _ProfileCardState extends State<ProfileCard> {
   Future<void> getDetails() async{
     var temp = await widget.auth.getUserDetails();
     setState(() {
-      name = temp;
+      name = temp['name'].toString();
     });
   }
 

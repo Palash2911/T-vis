@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 // Colors - main
 Color kPrimaryColor = Colors.blueAccent;
 Color kSecondaryColor = Colors.white;
-Color kPrimaryTextColor = Color(0xfff37474F);
+  Color kPrimaryTextColor = Color(0xfff37474F);
 
 // Box Decoraation - main Border
 Decoration kBorder = BoxDecoration(

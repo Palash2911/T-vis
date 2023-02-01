@@ -5,13 +5,32 @@ import 'package:tvis/Widgets/profileCard.dart';
 import '../../Services/firebaseAuth.dart';
 
 class ProfileDetailsPage extends StatefulWidget {
-  const ProfileDetailsPage({super.key});
+  ProfileDetailsPage({required this.auth});
+  final Auth auth;
 
   @override
   State<ProfileDetailsPage> createState() => _ProfileDetailsPageState();
 }
 
 class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
+
+  String name = "Your Name";
+  String num = "000";
+  String cllg = "";
+  @override
+  void initState() {
+    getDetails();
+  }
+
+  Future<void> getDetails() async{
+    var temp = await widget.auth.getUserDetails();
+    setState(() {
+      name = temp['name'].toString();
+      num = temp['num'].toString();
+      cllg = temp['cllg'].toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +53,9 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                 style: kNameTextStyle,
               ),
             ),
-            ProfileCard(
-              auth: Auth(),
-            ),
+            // ProfileCard(
+            //   auth: Auth(),
+            // ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
               decoration: kBorder,
@@ -54,11 +73,11 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                             text: TextSpan(
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Name:',
+                                  text: 'Name: ',
                                   style: kprofileDescriptionText,
                                 ),
                                 TextSpan(
-                                  text: ' Peter Parker',
+                                  text: name,
                                   style: kprofileDescriptionText.merge(
                                     TextStyle(fontWeight: FontWeight.normal),
                                   ),
@@ -71,13 +90,13 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                             text: TextSpan(
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Number:',
+                                  text: 'Number: ',
                                   style: kprofileDescriptionText,
                                 ),
                                 TextSpan(
-                                  text: ' 8979798778',
+                                  text: num,
                                   style: kprofileDescriptionText.merge(
-                                    TextStyle(fontWeight: FontWeight.normal),
+                                    const TextStyle(fontWeight: FontWeight.w100),
                                   ),
                                 ),
                               ],
@@ -88,11 +107,11 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                             text: TextSpan(
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Department:',
+                                  text: 'College: ',
                                   style: kprofileDescriptionText,
                                 ),
                                 TextSpan(
-                                  text: ' DYPCOE',
+                                  text: cllg,
                                   style: kprofileDescriptionText.copyWith(
                                       fontWeight: FontWeight.normal),
                                 ),
@@ -106,7 +125,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      child: Text("Change Request"),
+                      child: const Text("Save Details"),
                       onPressed: () {
                         // code to handle change request
                       },
