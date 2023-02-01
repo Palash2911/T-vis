@@ -8,6 +8,7 @@ Color kPrimaryTextColor = Color(0xfff37474F);
 
 // Box Decoraation - main Border
 Decoration kBorder = BoxDecoration(
+    // color: Colors.white,
     border: Border.all(
       color: Colors.blueAccent,
       width: 3,

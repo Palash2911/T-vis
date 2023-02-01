@@ -9,7 +9,7 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(32.0),
+      margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 15.0),
       padding: const EdgeInsets.all(20.0),
       decoration: kBorder,
       child: Row(
@@ -31,16 +31,15 @@ class ProfileCard extends StatelessWidget {
             ],
           ),
           Container(
-            margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
-            height: 100,
-            width: 100,
-            child: const CircleAvatar(
-              backgroundImage: AssetImage(
-                'assets/images/profile.png',
-              ),
-              radius: 70,
-            )
-          ),
+              margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
+              height: 100,
+              width: 100,
+              child: const CircleAvatar(
+                backgroundImage: AssetImage(
+                  'assets/images/profile.png',
+                ),
+                radius: 70,
+              )),
         ],
       ),
     );

@@ -17,6 +17,10 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Container(
           color: kSecondaryColor,
+          // decoration: BoxDecoration(
+          //   image: DecorationImage(
+          //       image: AssetImage("assets/images/bg.png"), fit: BoxFit.cover),
+          // ),
           child: Column(
             children: [
               SizedBox(
