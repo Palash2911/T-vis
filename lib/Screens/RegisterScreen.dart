@@ -26,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> register(BuildContext ctx) async {
     var user = await widget.auth.registerUser(name, vehNo, vehName, cllg.toString());
-    if (user) {
+    if (user.isNotEmpty) {
       Navigator.push(
         ctx,
         MaterialPageRoute(builder: (context) => bottomNavBar()),

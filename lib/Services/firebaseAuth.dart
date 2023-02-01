@@ -12,7 +12,7 @@ abstract class AuthClass {
   Future<void> signOut();
   Future<bool> verifyOtp(String otp);
   Future<bool> checkUser();
-  Future<bool> registerUser(
+  Future<Map<String, Object>> registerUser(
       String name, String vehicleNo, String vehicleName, String college);
   Future<Map<String, String>> getUserDetails();
 }
@@ -84,24 +84,29 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<bool> registerUser(
+  Future<Map<String, Object>> registerUser(
       String name, String vehicleNo, String vehicleName, String college) async {
     try {
       final auth = FirebaseAuth.instance.currentUser;
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
-      print(auth?.uid.toString());
+      var uid = _auth.currentUser?.uid;
       users.doc(auth?.uid).set({
         'Name': name,
         'VehicleNo': vehicleNo,
         'VehicleName': vehicleName,
         'College': college,
         'UserID': auth?.uid,
+        'Status': false,
       });
-      return true;
+      return {
+        'Name': name,
+        'UserID': uid.toString(),
+        'Status': false,
+      };
     } catch (e) {
       print(e);
-      return false;
+      return {};
     }
   }
 
