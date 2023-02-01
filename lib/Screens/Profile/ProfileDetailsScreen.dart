@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tvis/constants.dart';
 import 'package:tvis/Widgets/profileCard.dart';
 
+import '../../Services/firebaseAuth.dart';
+
 class ProfileDetailsPage extends StatefulWidget {
   const ProfileDetailsPage({super.key});
 
@@ -32,7 +34,9 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                 style: kNameTextStyle,
               ),
             ),
-            ProfileCard(),
+            ProfileCard(
+              auth: Auth(),
+            ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
               decoration: kBorder,

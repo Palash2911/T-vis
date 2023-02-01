@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:tvis/constants.dart';
 
-class ProfileCard extends StatelessWidget {
-  const ProfileCard({
-    Key? key,
-  }) : super(key: key);
+import '../Services/firebaseAuth.dart';
+
+class ProfileCard extends StatefulWidget {
+
+  ProfileCard({required this.auth});
+  final Auth auth;
+
+  @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+
+  String name = "Your Name";
+  @override
+  void initState() {
+    getDetails();
+  }
+
+  Future<void> getDetails() async{
+    var temp = await widget.auth.getUserDetails();
+    setState(() {
+      name = temp;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +40,15 @@ class ProfileCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Your Name',
+                name,
                 style: kNameTextStyle,
                 overflow: TextOverflow.ellipsis,
               ),
-              Text(
-                'Your Account No',
-                style: KAccountTextStyle,
-                overflow: TextOverflow.ellipsis,
-              ),
+              // Text(
+              //   'Your Account No',
+              //   style: KAccountTextStyle,
+              //   overflow: TextOverflow.ellipsis,
+              // ),
             ],
           ),
           Container(

@@ -41,7 +41,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: kNameTextStyle,
               ),
             ),
-            ProfileCard(),
+            ProfileCard(
+              auth: Auth(),
+            ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
               decoration: kBorder,

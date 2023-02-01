@@ -25,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String ?cllg;
 
   Future<void> register(BuildContext ctx) async {
-    var user = await widget.auth.registerUser(name, vehNo, vehName, "cllg");
+    var user = await widget.auth.registerUser(name, vehNo, vehName, cllg.toString());
     if (user) {
       Navigator.push(
         ctx,
@@ -90,6 +90,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                         ),
+                          onChanged: (value) {
+                            _vehNocontroller.value = TextEditingValue(
+                                text: value.toUpperCase(),
+                                selection: _vehNocontroller.selection
+                            );
+                          }
                       ),
                       const SizedBox(height: 20),
                       DropdownButtonFormField(
@@ -103,6 +109,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return DropdownMenuItem(
                             value: college,
                             child: Text(college),
+                            onTap: () {
+                              setState(() {
+                                cllg = college;
+                              });
+                            },
                           );
                         }).toList(),
                         onChanged: (value) {},
