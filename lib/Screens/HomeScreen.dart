@@ -43,9 +43,8 @@ class _HomePageState extends State<HomePage> {
     return !dataLoaded
         ? Container(
             alignment: Alignment.center,
-            margin: const EdgeInsets.all(150),
-            height: 200,
-            width: 200,
+            height: double.infinity,
+            width: double.infinity,
             child: const CircularProgressIndicator(),
           )
         : Scaffold(
