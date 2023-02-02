@@ -15,7 +15,9 @@ class bottomNavBar extends StatefulWidget {
 
 class _bottomNavBarState extends State<bottomNavBar> {
   final screens = [
-    HomePage(),
+    HomePage(
+      auth: Auth(),
+    ),
     HistoryPage(),
     ProfilePage(
       auth: Auth(),

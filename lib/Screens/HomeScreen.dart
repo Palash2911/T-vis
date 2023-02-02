@@ -1,8 +1,15 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tvis/constants.dart';
 
+import '../Services/firebaseAuth.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({required this.auth});
+  final Auth auth;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -10,6 +17,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isInside = true;
+  var details = {};
+  String encodedJson = "";
+
+  @override
+  void initState() {
+    _getDetails();
+  }
+
+  Future<void> _getDetails() async{
+    details = await widget.auth.getUserDetails();
+    setState(() {
+      isInside = details['status'] as bool;
+      encodedJson = jsonEncode(details);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +45,7 @@ class _HomePageState extends State<HomePage> {
           // ),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30.0,
               ),
               Row(
@@ -32,19 +54,19 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     width: 100.0,
                     decoration: kBorder,
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
                       children: [
                         CircleAvatar(
                           radius: 8.0,
                           backgroundColor: isInside ? Colors.green : Colors.red,
                         ),
-                        SizedBox(width: 10.0),
+                        const SizedBox(width: 10.0),
                         Text(isInside ? "Inside" : "Outside"),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 30.0,
                   )
                 ],
@@ -52,9 +74,23 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: Center(
                   child: Container(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     decoration: kBorder,
-                    child: Image.asset('assets/images/Qr.png'),
+                    child: QrImage(
+                      data: encodedJson,
+                      version: QrVersions.auto,
+                      size: 270,
+                      gapless: true,
+                      errorStateBuilder: (cxt, err) {
+                        return Center(
+                          child: Text(
+                            "Uh oh! Something went wrong...",
+                            textAlign: TextAlign.center,
+                            style: kprofileDescriptionText,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

@@ -20,7 +20,7 @@ abstract class AuthClass {
       String name, String phoneNo, String college);
   Future<bool> updateVehicle(
       String vname, String vNo);
-  Future<Map<String, String>> getUserDetails();
+  Future<Map<String, Object>> getUserDetails();
 }
 
 class Auth implements AuthClass {
@@ -116,13 +116,14 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<Map<String, String>> getUserDetails() async {
+  Future<Map<String, Object>> getUserDetails() async {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     String name = "";
     String? num = "";
     String cllg = "";
     String vname = "";
     String vno = "";
+    bool status = false;
     num = _auth.currentUser?.phoneNumber;
     await users
         .doc(_auth.currentUser?.uid)
@@ -133,6 +134,7 @@ class Auth implements AuthClass {
       cllg = data["College"].toString();
       vname = data["VehicleName"].toString();
       vno = data["VehicleNo"].toString();
+      status = data["Status"];
     });
     return {
       'name': name,
@@ -140,6 +142,7 @@ class Auth implements AuthClass {
       'cllg': cllg,
       'vname': vname,
       'vno': vno,
+      'status': status,
     };
   }
 
