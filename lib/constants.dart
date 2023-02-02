@@ -21,7 +21,7 @@ TextStyle kh1TextStyle =
 // TextStyles - main
 TextStyle kNameTextStyle =
     GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.bold);
-TextStyle KAccountTextStyle =
+TextStyle kAccountTextStyle =
     GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w500);
 TextStyle ktitleTextStyle =
     GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w600);
