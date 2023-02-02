@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          width: 100.0,
+                          width: 110.0,
                           decoration: kBorder,
                           padding: const EdgeInsets.all(10.0),
                           child: Row(

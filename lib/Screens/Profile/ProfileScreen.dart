@@ -6,6 +6,7 @@ import 'package:tvis/Screens/Profile/VechicalDetailsScreen.dart';
 import 'package:tvis/constants.dart';
 import 'package:tvis/Widgets/profileCard.dart';
 import '../../Services/firebaseAuth.dart';
+import '../Admin/AdminHomeScreen.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({required this.auth});
@@ -18,25 +19,25 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   void signOut(BuildContext ctx) async {
     await widget.auth.signOut();
-    if(ctx.mounted)
-      {
-        Fluttertoast.showToast(
-          msg: "Signed Out Successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Navigator.pushReplacement(
-          ctx,
-          MaterialPageRoute(
-            builder: (context) => LoginScreen(
-              auth: widget.auth,
-            ),
-          ),
-        );
-      }
+    // if(ctx.mounted)
+    //   {
+    //     Fluttertoast.showToast(
+    //       msg: "Signed Out Successfully",
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       timeInSecForIosWeb: 1,
+    //       backgroundColor: Colors.black,
+    //       textColor: Colors.white,
+    //       fontSize: 16.0,
+    //     );
+    //     Navigator.pushReplacement(
+    //       ctx,
+    //       MaterialPageRoute(
+    //         builder: (context) => LoginScreen(
+    //           auth: widget.auth,
+    //         ),
+    //       ),
+    //     );
+    //   }
   }
 
   @override
@@ -131,6 +132,29 @@ class _ProfilePageState extends State<ProfilePage> {
                       subtitle: Text('Done'),
                       trailing: Icon(Icons.arrow_forward_ios_rounded),
                       onTap: () => signOut(context),
+                    ),
+                  ),
+                  Card(
+                    elevation: 0.0,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.logout_rounded,
+                        size: 50.0,
+                        color: kPrimaryColor,
+                      ),
+                      title: Text(
+                        'Switch to Admin',
+                        style: ktitleTextStyle,
+                      ),
+                      subtitle: Text('use admin app'),
+                      trailing: Icon(Icons.arrow_forward_ios_rounded),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdminHomeScreen()),
+                        );
+                      },
                     ),
                   ),
                 ],
