@@ -19,85 +19,99 @@ class _HomePageState extends State<HomePage> {
   bool isInside = true;
   var details = {};
   String encodedJson = "";
+  var dataLoaded = false;
 
   @override
   void initState() {
+    super.initState();
     _getDetails();
   }
 
-  Future<void> _getDetails() async{
+  Future<void> _getDetails() async {
     details = await widget.auth.getUserDetails();
-    setState(() {
-      isInside = details['status'] as bool;
-      encodedJson = jsonEncode(details);
+    Future.delayed(const Duration(milliseconds: 450), () {
+      setState(() {
+        isInside = details['status'] as bool;
+        encodedJson = jsonEncode(details);
+        dataLoaded = true;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          color: kSecondaryColor,
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //       image: AssetImage("assets/images/bg.png"), fit: BoxFit.cover),
-          // ),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 100.0,
-                    decoration: kBorder,
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
+    return !dataLoaded
+        ? Container(
+            alignment: Alignment.center,
+            margin: const EdgeInsets.all(150),
+            height: 200,
+            width: 200,
+            child: const CircularProgressIndicator(),
+          )
+        : Scaffold(
+            body: SafeArea(
+              child: Container(
+                color: kSecondaryColor,
+                // decoration: BoxDecoration(
+                //   image: DecorationImage(
+                //       image: AssetImage("assets/images/bg.png"), fit: BoxFit.cover),
+                // ),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        CircleAvatar(
-                          radius: 8.0,
-                          backgroundColor: isInside ? Colors.green : Colors.red,
+                        Container(
+                          width: 100.0,
+                          decoration: kBorder,
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 8.0,
+                                backgroundColor:
+                                    isInside ? Colors.green : Colors.red,
+                              ),
+                              const SizedBox(width: 10.0),
+                              Text(isInside ? "Inside" : "Outside"),
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 10.0),
-                        Text(isInside ? "Inside" : "Outside"),
+                        const SizedBox(
+                          width: 30.0,
+                        )
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    width: 30.0,
-                  )
-                ],
-              ),
-              Expanded(
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: kBorder,
-                    child: QrImage(
-                      data: encodedJson,
-                      version: QrVersions.auto,
-                      size: 270,
-                      gapless: true,
-                      errorStateBuilder: (cxt, err) {
-                        return Center(
-                          child: Text(
-                            "Uh oh! Something went wrong...",
-                            textAlign: TextAlign.center,
-                            style: kprofileDescriptionText,
+                    Expanded(
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: kBorder,
+                          child: QrImage(
+                            data: encodedJson,
+                            version: QrVersions.auto,
+                            size: 270,
+                            gapless: true,
+                            errorStateBuilder: (cxt, err) {
+                              return Center(
+                                child: Text(
+                                  "Uh oh! Something went wrong...",
+                                  textAlign: TextAlign.center,
+                                  style: kprofileDescriptionText,
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }
