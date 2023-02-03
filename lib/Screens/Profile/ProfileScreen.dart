@@ -44,123 +44,125 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(32.0, 32.0, 0.0, 0.0),
-              child: Text(
-                'Profile',
-                style: kNameTextStyle,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(32.0, 32.0, 0.0, 0.0),
+                child: Text(
+                  'Profile',
+                  style: kNameTextStyle,
+                ),
               ),
-            ),
-            ProfileCard(
-              auth: Auth(),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
-              decoration: kBorder,
-              child: Column(
-                children: [
-                  //Profile option
-                  Card(
-                    elevation: 0.0,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.account_circle,
-                        size: 50.0,
-                        color: kPrimaryColor,
-                      ),
-                      title: Text(
-                        'Profile',
-                        style: ktitleTextStyle,
-                      ),
-                      subtitle: Text('Manage Profile'),
-                      trailing: Icon(Icons.arrow_forward_ios_rounded),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfileDetailsPage(
-                              auth: Auth(),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  // Vechical Option
-                  Card(
-                    elevation: 0.0,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.no_crash_rounded,
-                        size: 50.0,
-                        color: kPrimaryColor,
-                      ),
-                      title: Text(
-                        'Vehical Information',
-                        style: ktitleTextStyle,
-                      ),
-                      subtitle: Text('Manage Vechical'),
-                      trailing: Icon(Icons.arrow_forward_ios_rounded),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => vehicleDetailsPage(
-                              auth: Auth(),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  //Sign Out
-                  Card(
-                    elevation: 0.0,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.logout_rounded,
-                        size: 50.0,
-                        color: kPrimaryColor,
-                      ),
-                      title: Text(
-                        'Sign Out',
-                        style: ktitleTextStyle,
-                      ),
-                      subtitle: Text('Done'),
-                      trailing: Icon(Icons.arrow_forward_ios_rounded),
-                      onTap: () => signOut(context),
-                    ),
-                  ),
-                  Card(
-                    elevation: 0.0,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.logout_rounded,
-                        size: 50.0,
-                        color: kPrimaryColor,
-                      ),
-                      title: Text(
-                        'Switch to Admin',
-                        style: ktitleTextStyle,
-                      ),
-                      subtitle: Text('use admin app'),
-                      trailing: Icon(Icons.arrow_forward_ios_rounded),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AdminHomeScreen()),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+              ProfileCard(
+                auth: Auth(),
               ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
+                decoration: kBorder,
+                child: Column(
+                  children: [
+                    //Profile option
+                    Card(
+                      elevation: 0.0,
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.account_circle,
+                          size: 50.0,
+                          color: kPrimaryColor,
+                        ),
+                        title: Text(
+                          'Profile',
+                          style: ktitleTextStyle,
+                        ),
+                        subtitle: Text('Manage Profile'),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfileDetailsPage(
+                                auth: Auth(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    // Vechical Option
+                    Card(
+                      elevation: 0.0,
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.no_crash_rounded,
+                          size: 50.0,
+                          color: kPrimaryColor,
+                        ),
+                        title: Text(
+                          'Vehical Information',
+                          style: ktitleTextStyle,
+                        ),
+                        subtitle: Text('Manage Vechical'),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => vehicleDetailsPage(
+                                auth: Auth(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    //Sign Out
+                    Card(
+                      elevation: 0.0,
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.logout_rounded,
+                          size: 50.0,
+                          color: kPrimaryColor,
+                        ),
+                        title: Text(
+                          'Sign Out',
+                          style: ktitleTextStyle,
+                        ),
+                        subtitle: Text('Done'),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () => signOut(context),
+                      ),
+                    ),
+                    Card(
+                      elevation: 0.0,
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.logout_rounded,
+                          size: 50.0,
+                          color: kPrimaryColor,
+                        ),
+                        title: Text(
+                          'Switch to Admin',
+                          style: ktitleTextStyle,
+                        ),
+                        subtitle: Text('use admin app'),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AdminHomeScreen()),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

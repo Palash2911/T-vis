@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tvis/constants.dart';
 
@@ -45,7 +46,10 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.center,
             height: double.infinity,
             width: double.infinity,
-            child: const CircularProgressIndicator(),
+            child: Container(
+              height: 500.0,
+              child: Lottie.asset('assets/animations/loading.json'),
+            ),
           )
         : Scaffold(
             body: SafeArea(
@@ -53,7 +57,9 @@ class _HomePageState extends State<HomePage> {
                 color: kSecondaryColor,
                 // decoration: BoxDecoration(
                 //   image: DecorationImage(
-                //       image: AssetImage("assets/images/bg.png"), fit: BoxFit.cover),
+                //     image: AssetImage("assets/images/bg2.png"),
+                //     fit: BoxFit.cover,
+                //   ),
                 // ),
                 child: Column(
                   children: [
@@ -86,24 +92,40 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Expanded(
                       child: Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: kBorder,
-                          child: QrImage(
-                            data: encodedJson,
-                            version: QrVersions.auto,
-                            size: 270,
-                            gapless: true,
-                            errorStateBuilder: (cxt, err) {
-                              return Center(
-                                child: Text(
-                                  "Uh oh! Something went wrong...",
-                                  textAlign: TextAlign.center,
-                                  style: kprofileDescriptionText,
-                                ),
-                              );
-                            },
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: kBorder,
+                              child: QrImage(
+                                data: encodedJson,
+                                version: QrVersions.auto,
+                                size: 270,
+                                gapless: true,
+                                errorStateBuilder: (cxt, err) {
+                                  return Center(
+                                    child: Text(
+                                      "Uh oh! Something went wrong...",
+                                      textAlign: TextAlign.center,
+                                      style: kprofileDescriptionText,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Container(
+                              decoration: kBorder,
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                "QR ID: 86326",
+                                style: ktitleTextStyle,
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),

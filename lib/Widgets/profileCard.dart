@@ -4,7 +4,6 @@ import 'package:tvis/constants.dart';
 import '../Services/firebaseAuth.dart';
 
 class ProfileCard extends StatefulWidget {
-
   ProfileCard({required this.auth});
   final Auth auth;
 
@@ -13,14 +12,13 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
-
   String name = "Your Name";
   @override
   void initState() {
     getDetails();
   }
 
-  Future<void> getDetails() async{
+  Future<void> getDetails() async {
     var temp = await widget.auth.getUserDetails();
     setState(() {
       name = temp['name'].toString();
@@ -34,7 +32,7 @@ class _ProfileCardState extends State<ProfileCard> {
       padding: const EdgeInsets.all(20.0),
       decoration: kBorder,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,11 +48,11 @@ class _ProfileCardState extends State<ProfileCard> {
                   ),
                 ),
               ),
-              // Text(
-              //   'Your Account No',
-              //   style: KAccountTextStyle,
-              //   overflow: TextOverflow.ellipsis,
-              // ),
+              Text(
+                'QR ID: 4987984',
+                style: kAccountTextStyle,
+                overflow: TextOverflow.ellipsis,
+              ),
             ],
           ),
           Container(

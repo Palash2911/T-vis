@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvis/Screens/OtpScreen.dart';
+import 'package:tvis/Screens/RegisterScreen.dart';
 import 'package:tvis/constants.dart';
 
 import '../Services/firebaseAuth.dart';
@@ -46,12 +47,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Padding(
+          child: Container(
+            alignment: Alignment.bottomCenter,
             padding:
-                const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+                const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
                 const SizedBox(height: 20),
                 SizedBox(
                   height: 270.0,
@@ -73,14 +76,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   keyboardType: TextInputType.phone,
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  height: 60.0,
-                  child: ElevatedButton(
-                    onPressed: () => sendOtp(context),
-                    child: const Text('Generate OTP'),
+                const SizedBox(height: 18),
+                ElevatedButton(
+                  onPressed: () => sendOtp(context),
+                  child: Text(
+                    "Generate OTP",
+                    style: kButtonTextStyle,
                   ),
+                ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   height: 60.0,
+                //   child: ElevatedButton(
+                //     onPressed: () => sendOtp(context),
+                //     child: const Text('Generate OTP'),
+                //   ),
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Dont have an account? ",
+                      style: kAccountTextStyle,
+                    ),
+                    GestureDetector(
+                      child: Text(
+                        "Create one ",
+                        style: ktitleTextStyle.copyWith(color: kPrimaryColor),
+                      ),
+                      onTap: () {},
+                    ),
+                  ],
                 ),
               ],
             ),
