@@ -13,8 +13,10 @@ class ProfileCard extends StatefulWidget {
 
 class _ProfileCardState extends State<ProfileCard> {
   String name = "Your Name";
+  String uid = "";
   @override
   void initState() {
+    super.initState();
     getDetails();
   }
 
@@ -22,6 +24,7 @@ class _ProfileCardState extends State<ProfileCard> {
     var temp = await widget.auth.getUserDetails();
     setState(() {
       name = temp['name'].toString();
+      uid = temp['uid'].toString();
     });
   }
 
@@ -37,7 +40,7 @@ class _ProfileCardState extends State<ProfileCard> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: 130,
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
@@ -49,7 +52,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 ),
               ),
               Text(
-                'QR ID: 4987984',
+                'QR ID: $uid',
                 style: kAccountTextStyle,
                 overflow: TextOverflow.ellipsis,
               ),

@@ -14,7 +14,7 @@ abstract class AuthClass {
   Future<void> signOut();
   Future<bool> verifyOtp(String otp);
   Future<bool> checkUser();
-  Future<Map<String, Object>> registerUser(
+  Future<String> registerUser(
       String name, String vehicleNo, String vehicleName, String college);
   Future<bool> updateUser(
       String name, String phoneNo, String college);
@@ -88,7 +88,7 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<Map<String, Object>> registerUser(
+  Future<String> registerUser(
       String name, String vehicleNo, String vehicleName, String college) async {
     try {
       final auth = FirebaseAuth.instance.currentUser;
@@ -101,17 +101,13 @@ class Auth implements AuthClass {
         'VehicleName': vehicleName,
         'College': college,
         'PhoneNo': auth?.phoneNumber,
-        'UserID': auth?.uid,
+        'UserID': auth?.uid.toString().substring(0, 7),
         'Status': false,
       });
-      return {
-        'Name': name,
-        'UserID': uid.toString(),
-        'Status': false,
-      };
+      return uid.toString();
     } catch (e) {
       print(e);
-      return {};
+      return "";
     }
   }
 
@@ -123,6 +119,7 @@ class Auth implements AuthClass {
     String cllg = "";
     String vname = "";
     String vno = "";
+    String uid = "";
     bool status = false;
     num = _auth.currentUser?.phoneNumber;
     await users
@@ -135,6 +132,7 @@ class Auth implements AuthClass {
       vname = data["VehicleName"].toString();
       vno = data["VehicleNo"].toString();
       status = data["Status"];
+      uid = data["UserID"];
     });
     return {
       'name': name,
@@ -143,6 +141,7 @@ class Auth implements AuthClass {
       'vname': vname,
       'vno': vno,
       'status': status,
+      'uid': uid,
     };
   }
 

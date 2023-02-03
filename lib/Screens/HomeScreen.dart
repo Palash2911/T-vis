@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -7,6 +6,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tvis/constants.dart';
 
 import '../Services/firebaseAuth.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class HomePage extends StatefulWidget {
   HomePage({required this.auth});
@@ -19,8 +19,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isInside = true;
   var details = {};
-  String encodedJson = "";
   var dataLoaded = false;
+  String uid = "";
+  static final key = encrypt.Key.fromLength(32);
+  static final iv = encrypt.IV.fromLength(16);
+  static final encrypter = encrypt.Encrypter(encrypt.AES(key));
+  var encrypts;
+  // final encrypter = encrypt.Encrypter(AES(key));
 
   @override
   void initState() {
@@ -33,8 +38,12 @@ class _HomePageState extends State<HomePage> {
     Future.delayed(const Duration(milliseconds: 450), () {
       setState(() {
         isInside = details['status'] as bool;
-        encodedJson = jsonEncode(details);
+        var encodedJson = jsonEncode(details);
+        encrypts = encrypter.encrypt(encodedJson, iv: iv).base16;
+        // var decrypted = encrypter.decrypt(encrypts, iv: iv);
+        print(encrypts);
         dataLoaded = true;
+        uid = details['uid'];
       });
     });
   }
@@ -99,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.all(10.0),
                               decoration: kBorder,
                               child: QrImage(
-                                data: encodedJson,
+                                data: encrypts,
                                 version: QrVersions.auto,
                                 size: 270,
                                 gapless: true,
@@ -121,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                               decoration: kBorder,
                               padding: const EdgeInsets.all(10.0),
                               child: Text(
-                                "QR ID: 86326",
+                                "QR ID: $uid",
                                 style: ktitleTextStyle,
                               ),
                             )

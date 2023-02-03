@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tvis/Screens/LoginScreen.dart';
 import 'package:tvis/Screens/Profile/ProfileDetailsScreen.dart';
 import 'package:tvis/Screens/Profile/VechicalDetailsScreen.dart';
@@ -17,32 +18,52 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  var dataLoaded = false;
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 550), () {
+      setState(() {
+        dataLoaded = true;
+      });
+    });
+    super.initState();
+  }
+
   void signOut(BuildContext ctx) async {
     await widget.auth.signOut();
-    // if(ctx.mounted)
-    //   {
-    //     Fluttertoast.showToast(
-    //       msg: "Signed Out Successfully",
-    //       toastLength: Toast.LENGTH_SHORT,
-    //       timeInSecForIosWeb: 1,
-    //       backgroundColor: Colors.black,
-    //       textColor: Colors.white,
-    //       fontSize: 16.0,
-    //     );
-    //     Navigator.pushReplacement(
-    //       ctx,
-    //       MaterialPageRoute(
-    //         builder: (context) => LoginScreen(
-    //           auth: widget.auth,
-    //         ),
-    //       ),
-    //     );
-    //   }
+    if (ctx.mounted) {
+      Fluttertoast.showToast(
+        msg: "Signed Out Successfully",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      Navigator.pushReplacement(
+        ctx,
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(
+            auth: widget.auth,
+          ),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return !dataLoaded ? Container(
+      alignment: Alignment.center,
+      height: double.infinity,
+      width: double.infinity,
+      child: Container(
+        height: 500.0,
+        child: Lottie.asset('assets/animations/loading.json'),
+      ),
+    ):Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
