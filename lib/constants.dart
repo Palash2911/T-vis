@@ -8,13 +8,18 @@ Color kPrimaryTextColor = Color(0xfff37474F);
 
 // Box Decoraation - main Border
 Decoration kBorder = BoxDecoration(
-    // color: Colors.white,
-    border: Border.all(
-      color: Colors.blueAccent,
-      width: 3,
-    ),
-    borderRadius: BorderRadius.circular(20));
+  // color: Colors.white,
+  border: Border.all(
+    color: Colors.blueAccent,
+    width: 3,
+  ),
+  borderRadius: BorderRadius.circular(20),
+);
 
+Decoration kfillContainer = BoxDecoration(
+  color: kPrimaryColor,
+  borderRadius: BorderRadius.circular(20),
+);
 // TextStyles - main
 TextStyle kh1TextStyle =
     GoogleFonts.poppins(fontSize: 36.0, fontWeight: FontWeight.bold);

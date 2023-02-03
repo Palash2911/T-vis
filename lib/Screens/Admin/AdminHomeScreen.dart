@@ -17,7 +17,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
-          "assets/images/logo.png",
+          "assets/images/logo2.png",
           height: 50,
           width: 50,
         ),
@@ -58,8 +58,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       body: SafeArea(
         child: Container(
           // color: kSecondaryColor,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
+              colorFilter:
+                  ColorFilter.mode(Colors.white54, BlendMode.softLight),
+              opacity: 10.0,
               image: AssetImage("assets/images/bg.png"),
               fit: BoxFit.cover,
             ),
@@ -151,22 +154,74 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ],
                 ),
               ),
-              //Here we can also show the history of vechicals entered thats why floating button
-              FloatingActionButton.extended(
-                label: Text(
-                  "Scan Qr",
-                  style: ktitleTextStyle,
-                ),
-                icon: Icon(Icons.qr_code_scanner_rounded),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QrScan(),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 32.0, vertical: 10.0),
+                padding: EdgeInsets.all(10.0),
+                decoration: kBorder,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          decoration: kfillContainer,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.qr_code_scanner_rounded,
+                                size: 120.0,
+                                color: kSecondaryColor,
+                              ),
+                              Text(
+                                "Scan QR",
+                                style: kButtonTextStyle.copyWith(
+                                    color: kSecondaryColor),
+                              )
+                            ],
+                          )),
                     ),
-                  );
-                },
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(10.0),
+                        decoration: kfillContainer,
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.person,
+                              size: 120.0,
+                              color: kSecondaryColor,
+                            ),
+                            Text(
+                              "Profile",
+                              style: kButtonTextStyle.copyWith(
+                                  color: kSecondaryColor),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
+              // FloatingActionButton.extended(
+              //   label: Text(
+              //     "Scan Qr",
+              //     style: ktitleTextStyle,
+              //   ),
+              //   icon: Icon(Icons.qr_code_scanner_rounded),
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => QrScan(),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),
