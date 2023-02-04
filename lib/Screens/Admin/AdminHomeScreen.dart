@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tvis/Screens/Admin/AdminProfileScreen.dart';
 import 'package:tvis/Screens/Admin/QRScanScren.dart';
 import 'package:tvis/Screens/Admin/SucessScreen.dart';
+import '../../Services/firebaseAuth.dart';
 import '../../constants.dart';
 
 class AdminHomeScreen extends StatefulWidget {
@@ -240,7 +241,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SuccessScreen(),
+                        builder: (context) => SuccessScreen(
+                          uid: "",
+                          auth: Auth(),
+                        ),
                       ),
                     );
                   },

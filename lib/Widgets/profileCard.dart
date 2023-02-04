@@ -21,7 +21,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   Future<void> getDetails() async {
-    var temp = await widget.auth.getUserDetails();
+    var temp = await widget.auth.getUserDetails("");
     setState(() {
       name = temp['name'].toString();
       uid = temp['uid'].toString().substring(0, 7);

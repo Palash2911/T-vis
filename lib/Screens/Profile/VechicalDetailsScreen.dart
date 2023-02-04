@@ -24,7 +24,7 @@ class _vehicleDetailsPageState extends State<vehicleDetailsPage> {
   }
 
   Future<void> getDetails() async {
-    var temp = await widget.auth.getUserDetails();
+    var temp = await widget.auth.getUserDetails("");
     setState(() {
       _vehNamecontroller.text = temp['vname'].toString();
       _vehNocontroller.text = temp['vno'].toString();

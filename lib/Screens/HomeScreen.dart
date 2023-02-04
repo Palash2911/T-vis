@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _getDetails() async {
-    details = await widget.auth.getUserDetails();
+    details = await widget.auth.getUserDetails("");
     Future.delayed(const Duration(milliseconds: 450), () {
       setState(() {
         isInside = details['status'] as bool;

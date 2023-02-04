@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:tvis/Screens/Admin/SucessScreen.dart';
 import 'package:tvis/constants.dart';
 
+import '../../Services/firebaseAuth.dart';
 import '../../Widgets/overlay.dart';
 
 class QrScan extends StatefulWidget {
@@ -20,23 +20,23 @@ class _QrScanState extends State<QrScan> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 width: double.infinity,
                 decoration: kBorder,
                 child: FloatingActionButton.extended(
                   heroTag: '1',
                   onPressed: () {},
-                  icon: Icon(Icons.flash_on),
-                  label: Text("Tourch"),
+                  icon: const Icon(Icons.flash_on),
+                  label: const Text("Torch"),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30.0,
             ),
             Expanded(
@@ -52,7 +52,10 @@ class _QrScanState extends State<QrScan> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Text(code),
+                            builder: (context) => SuccessScreen(
+                              uid: code,
+                              auth: Auth(),
+                            ),
                           ),
                         );
                       }
@@ -73,7 +76,7 @@ class _QrScanState extends State<QrScan> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30.0,
             ),
             Expanded(
@@ -82,7 +85,7 @@ class _QrScanState extends State<QrScan> {
                 decoration: kBorder,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+                  children: const [
                     Text("Scan the Qr Code"),
                     Text("Scanning will be starting automatically"),
                     LinearProgressIndicator(),

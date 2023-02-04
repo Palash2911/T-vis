@@ -2,7 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvis/constants.dart';
 
-class SuccessScreen extends StatelessWidget {
+import '../../Services/firebaseAuth.dart';
+
+class SuccessScreen extends StatefulWidget {
+  final String uid;
+  final Auth auth;
+  SuccessScreen({required this.uid, required this.auth});
+  @override
+  State<SuccessScreen> createState() => _SuccessScreenState();
+}
+
+class _SuccessScreenState extends State<SuccessScreen> {
+
+  String name = "";
+  String qrID = "";
+
+  @override
+  void initState() {
+    getDetails();
+    super.initState();
+  }
+
+  Future<void> getDetails() async {
+    print(widget.uid);
+    var temp = await widget.auth.getUserDetails(widget.uid);
+    setState(() {
+      name = temp['name'].toString();
+      qrID = temp['uid'].toString().substring(0, 7);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,13 +48,13 @@ class SuccessScreen extends StatelessWidget {
             "QR Scan Successfully",
             style: kNameTextStyle,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           Text(
-            "Name: Hello World",
+            "Name: $name",
             style: ktitleTextStyle,
           ),
-          SizedBox(height: 10.0),
-          Text("QR ID: 847549", style: ktitleTextStyle),
+          const SizedBox(height: 10.0),
+          Text("QR ID: $qrID", style: ktitleTextStyle),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -33,13 +62,13 @@ class SuccessScreen extends StatelessWidget {
                 onPressed: () {
                   // Do something when the button is pressed
                 },
-                child: Text("Decline"),
+                child: const Text("Decline"),
               ),
               ElevatedButton(
                 onPressed: () {
                   // Do something when the button is pressed
                 },
-                child: Text("Accept"),
+                child: const Text("Accept"),
               ),
             ],
           ),

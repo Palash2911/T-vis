@@ -25,7 +25,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
   }
 
   Future<void> getDetails() async {
-    var temp = await widget.auth.getUserDetails();
+    var temp = await widget.auth.getUserDetails("");
     setState(() {
       _namecontroller.text = temp['name'].toString();
       _phoneNocontroller.text = temp['num'].toString();

@@ -20,7 +20,7 @@ abstract class AuthClass {
       String name, String phoneNo, String college);
   Future<bool> updateVehicle(
       String vname, String vNo);
-  Future<Map<String, Object>> getUserDetails();
+  Future<Map<String, Object>> getUserDetails(String uid);
 }
 
 class Auth implements AuthClass {
@@ -112,7 +112,7 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<Map<String, Object>> getUserDetails() async {
+  Future<Map<String, Object>> getUserDetails(String? uuid) async {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     String name = "";
     String? num = "";
@@ -120,10 +120,14 @@ class Auth implements AuthClass {
     String vname = "";
     String vno = "";
     String uid = "";
+    if(uuid!.isEmpty)
+      {
+        uuid = _auth.currentUser?.uid;
+      }
     bool status = false;
     num = _auth.currentUser?.phoneNumber;
     await users
-        .doc(_auth.currentUser?.uid)
+        .doc(uuid)
         .get()
         .then((DocumentSnapshot query) {
       Map<String, dynamic> data = query.data() as Map<String, dynamic>;
