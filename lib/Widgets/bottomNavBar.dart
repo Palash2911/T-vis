@@ -18,7 +18,9 @@ class _bottomNavBarState extends State<bottomNavBar> {
     HomePage(
       auth: Auth(),
     ),
-    HistoryPage(),
+    HistoryPage(
+      auth: Auth(),
+    ),
     ProfilePage(
       auth: Auth(),
     ),
