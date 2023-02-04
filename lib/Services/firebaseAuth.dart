@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
+
+import '../models/Trips.dart';
 
 class Users {
   Users({required this.uid});
@@ -20,6 +23,9 @@ abstract class AuthClass {
   Future<bool> updateVehicle(String vname, String vNo);
   Future<Map<String, Object>> getUserDetails(String uid);
   Future<bool> updateStatus(String st, String uid);
+  List<Trips> tripsFromFirestore(QuerySnapshot snapshot);
+  Stream<List<Trips>> listTrips();
+  Future<int> noOfTrips();
 }
 
 class Auth implements AuthClass {
@@ -185,15 +191,57 @@ class Auth implements AuthClass {
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
+      var sts = "";
       if (st == 'allowEntry') {
+        sts = "Entered";
         await users.doc(uid).update({'Status': true});
       } else if (st == 'allowExit') {
+        sts = "Exited";
         await users.doc(uid).update({'Status': false});
+      }
+      if (st != "Decline") {
+        DateTime now = DateTime.now();
+        String formattedDate = DateFormat('dd MMM, h:mm a').format(now);
+        await users.doc(uid).collection('trips').doc().set({
+          'DateTime': formattedDate,
+          'Status': sts,
+        });
       }
       return true;
     } catch (e) {
       print(e);
       return false;
     }
+  }
+
+  @override
+  Stream<List<Trips>> listTrips() {
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    return users
+        .doc(_auth.currentUser?.uid)
+        .collection("trips")
+        .snapshots()
+        .map(tripsFromFirestore);
+  }
+
+  @override
+  List<Trips> tripsFromFirestore(QuerySnapshot<Object?> snapshot) {
+    return snapshot.docs.map(
+      (e) {
+        return Trips(status: e["Status"], dateTime: e["DateTime"]);
+      },
+    ).toList();
+  }
+
+  @override
+  Future<int> noOfTrips() async {
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    var documentCount;
+    await users
+        .doc(_auth.currentUser?.uid)
+        .collection("trips")
+        .get()
+        .then((value) => documentCount = value.docs.length);
+    return documentCount;
   }
 }

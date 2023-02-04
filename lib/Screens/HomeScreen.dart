@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   var dataLoaded = false;
   String uid = "";
   var encoded = "";
-  // final encrypter = encrypt.Encrypter(AES(key));
 
   @override
   void initState() {
@@ -39,6 +38,11 @@ class _HomePageState extends State<HomePage> {
         encoded = (details['uid'] + details['uuid']);
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
