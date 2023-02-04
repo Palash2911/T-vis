@@ -51,11 +51,11 @@ class _QrScanState extends State<QrScan> {
                       String code = barcode.rawValue ?? '---';
                       if (!isScanned) {
                         isScanned = true;
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => SuccessScreen(
-                              uid: code.toString().substring(7),
+                              uid: code,
                               auth: Auth(),
                             ),
                           ),

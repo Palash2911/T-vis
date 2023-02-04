@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tvis/Screens/Admin/AdminHomeScreen.dart';
 import 'package:tvis/constants.dart';
 
 import '../../Services/firebaseAuth.dart';
@@ -13,7 +14,6 @@ class SuccessScreen extends StatefulWidget {
 }
 
 class _SuccessScreenState extends State<SuccessScreen> {
-
   String name = "";
   String qrID = "";
   var st = true;
@@ -24,8 +24,21 @@ class _SuccessScreenState extends State<SuccessScreen> {
     super.initState();
   }
 
+  Future<void> _updateSt(String status) async {
+    var temp = await widget.auth
+        .updateStatus(status, widget.uid.toString().substring(7));
+    if (temp) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (ctx) => const AdminHomeScreen(),
+        ),
+      );
+    }
+  }
+
   Future<void> getDetails() async {
-    var temp = await widget.auth.getUserDetails(widget.uid);
+    var temp =
+        await widget.auth.getUserDetails(widget.uid.toString().substring(7));
     setState(() {
       name = temp['name'].toString();
       qrID = temp['uid'].toString();
@@ -61,15 +74,18 @@ class _SuccessScreenState extends State<SuccessScreen> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  // Do something when the button is pressed
+                  _updateSt("Decline");
                 },
-                child: const Text("Decline"),
+                child: st
+                    ? const Text("Decline Exit")
+                    : const Text("Decline Entry"),
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Do something when the button is pressed
+                  st ? _updateSt("allowExit") : _updateSt("allowEntry");
                 },
-                child: const Text("Accept"),
+                child:
+                    st ? const Text("Allow Exit") : const Text("Allow Entry"),
               ),
             ],
           ),
