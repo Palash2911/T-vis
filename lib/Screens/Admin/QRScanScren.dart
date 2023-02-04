@@ -52,7 +52,7 @@ class _QrScanState extends State<QrScan> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Text("QR Scan Succesfully"),
+                            builder: (context) => Text(code),
                           ),
                         );
                       }

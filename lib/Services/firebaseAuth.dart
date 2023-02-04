@@ -101,7 +101,7 @@ class Auth implements AuthClass {
         'VehicleName': vehicleName,
         'College': college,
         'PhoneNo': auth?.phoneNumber,
-        'UserID': auth?.uid.toString().substring(0, 7),
+        'UserID': auth?.uid,
         'Status': false,
       });
       return uid.toString();

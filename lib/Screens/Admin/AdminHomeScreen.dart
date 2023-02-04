@@ -27,15 +27,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         child: ListView(
           children: <Widget>[
             DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+              ),
               child: Image.asset(
                 "assets/images/logo.png",
               ),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
             ),
             ListTile(
-                title: Text("Profile"),
+                title: const Text("Profile"),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -45,7 +45,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   );
                 }),
             ListTile(
-              title: Text("Log Out"),
+              title: const Text("Log Out"),
               onTap: () {},
             ),
             // ListTile(
@@ -56,8 +56,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SafeArea(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: SafeArea(
           child: Container(
             // color: kSecondaryColor,
             decoration: const BoxDecoration(
@@ -85,10 +85,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       color: kPrimaryColor,
                     ),
                     title: Text(
-                      'Vechicals in campus',
+                      'Vehicles in campus',
                       style: ktitleTextStyle,
                     ),
-                    subtitle: Text('Today'),
+                    subtitle: const Text('Today'),
                     trailing: Text(
                       '100',
                       style: ktitleTextStyle,
@@ -132,7 +132,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                   ),
                                 ),
                                 // keyboardType: TextInputType.phone,
-                                maxLength: 13,
+                                maxLength: 7,
                               ),
                             ],
                           ),
@@ -170,30 +170,31 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AdminProfile(),
+                                builder: (context) => QrScan(),
                               ),
                             );
                           },
                           child: Container(
-                              padding: EdgeInsets.all(10.0),
-                              decoration: kfillContainer,
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.qr_code_scanner_rounded,
-                                    size: 120.0,
-                                    color: kSecondaryColor,
-                                  ),
-                                  Text(
-                                    "Scan QR",
-                                    style: kButtonTextStyle.copyWith(
-                                        color: kSecondaryColor),
-                                  )
-                                ],
-                              )),
+                            padding: EdgeInsets.all(10.0),
+                            decoration: kfillContainer,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.qr_code_scanner_rounded,
+                                  size: 120.0,
+                                  color: kSecondaryColor,
+                                ),
+                                Text(
+                                  "Scan QR",
+                                  style: kButtonTextStyle.copyWith(
+                                      color: kSecondaryColor),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20.0,
                       ),
                       Expanded(

@@ -64,8 +64,8 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Lottie.asset('assets/animations/loading.json'),
       ),
     ):Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -6,7 +6,6 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tvis/constants.dart';
 
 import '../Services/firebaseAuth.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
 
 class HomePage extends StatefulWidget {
   HomePage({required this.auth});
@@ -21,10 +20,7 @@ class _HomePageState extends State<HomePage> {
   var details = {};
   var dataLoaded = false;
   String uid = "";
-  static final key = encrypt.Key.fromLength(32);
-  static final iv = encrypt.IV.fromLength(16);
-  static final encrypter = encrypt.Encrypter(encrypt.AES(key));
-  var encrypts;
+  var encodedJson = "";
   // final encrypter = encrypt.Encrypter(AES(key));
 
   @override
@@ -38,12 +34,9 @@ class _HomePageState extends State<HomePage> {
     Future.delayed(const Duration(milliseconds: 450), () {
       setState(() {
         isInside = details['status'] as bool;
-        var encodedJson = jsonEncode(details);
-        encrypts = encrypter.encrypt(encodedJson, iv: iv).base16;
-        // var decrypted = encrypter.decrypt(encrypts, iv: iv);
-        print(encrypts);
         dataLoaded = true;
-        uid = details['uid'];
+        uid = details['uid'].toString().substring(0, 7);
+        encodedJson = jsonEncode(details['uid']);
       });
     });
   }
@@ -108,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.all(10.0),
                               decoration: kBorder,
                               child: QrImage(
-                                data: encrypts,
+                                data: encodedJson,
                                 version: QrVersions.auto,
                                 size: 270,
                                 gapless: true,
