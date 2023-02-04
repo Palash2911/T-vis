@@ -120,12 +120,10 @@ class Auth implements AuthClass {
     String vno = "";
     String uid = "";
     String? uuuid = _auth.currentUser?.uid;
+    bool status = false;
     if (uuid!.isNotEmpty) {
       uuuid = uuid;
     }
-    print(uuuid);
-    bool status = false;
-    num = _auth.currentUser?.phoneNumber;
     await users.doc(uuuid.toString()).get().then((DocumentSnapshot query) {
       Map<String, dynamic> data = query.data() as Map<String, dynamic>;
       name = data["Name"].toString();
@@ -135,6 +133,8 @@ class Auth implements AuthClass {
       status = data["Status"];
       uid = data["UserID"];
     });
+
+    num = _auth.currentUser?.phoneNumber;
     return {
       'name': name,
       'num': num.toString(),
@@ -181,21 +181,15 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<bool> updateStatus(String st, String uid) async{
+  Future<bool> updateStatus(String st, String uid) async {
     try {
-      CollectionReference users = FirebaseFirestore.instance.collection('Users');
-      if(st == 'allowEntry')
-        {
-          await users.doc(uid).update({
-            'Status': true
-          });
-        }
-      else if(st == 'allowExit')
-        {
-          await users.doc(uid).update({
-            'Status': false
-          });
-        }
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      if (st == 'allowEntry') {
+        await users.doc(uid).update({'Status': true});
+      } else if (st == 'allowExit') {
+        await users.doc(uid).update({'Status': false});
+      }
       return true;
     } catch (e) {
       print(e);

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tvis/Screens/Admin/AdminProfileScreen.dart';
 import 'package:tvis/Screens/Admin/QRScanScren.dart';
@@ -6,13 +7,42 @@ import '../../Services/firebaseAuth.dart';
 import '../../constants.dart';
 
 class AdminHomeScreen extends StatefulWidget {
-  const AdminHomeScreen({super.key});
+  final Auth auth;
+  const AdminHomeScreen({required this.auth});
 
   @override
   State<AdminHomeScreen> createState() => _AdminHomeScreenState();
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
+  final TextEditingController _qrIdController = TextEditingController();
+  String get qrId => _qrIdController.text;
+
+  Future<void> _getDetails() async {
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    try {
+      users.where("UserID", isEqualTo: qrId).snapshots().listen(
+            (event) =>
+            event.docs.forEach(
+                  (doc) {
+                print(doc.id);
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (ctx) =>
+                        SuccessScreen(
+                          auth: Auth(),
+                          uid: doc.id,
+                        ),
+                  ),
+                );
+              },
+            ),
+      );
+    }catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +153,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                               ),
                               const SizedBox(height: 9.0),
                               TextField(
-                                // controller: _qrIdController,
+                                controller: _qrIdController,
                                 decoration: InputDecoration(
                                   counterText: '',
                                   prefixIcon:
@@ -142,7 +172,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: _getDetails,
                           child: Padding(
                             padding: const EdgeInsets.all(9.0),
                             child: Text(

@@ -26,11 +26,13 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   Future<void> _updateSt(String status) async {
     var temp = await widget.auth
-        .updateStatus(status, widget.uid.toString().substring(7));
+        .updateStatus(status, widget.uid.toString());
     if (temp) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (ctx) => const AdminHomeScreen(),
+          builder: (ctx) => AdminHomeScreen(
+            auth: Auth(),
+          ),
         ),
       );
     }
@@ -38,7 +40,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   Future<void> getDetails() async {
     var temp =
-        await widget.auth.getUserDetails(widget.uid.toString().substring(7));
+        await widget.auth.getUserDetails(widget.uid.toString());
     setState(() {
       name = temp['name'].toString();
       qrID = temp['uid'].toString();

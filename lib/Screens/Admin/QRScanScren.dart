@@ -55,7 +55,7 @@ class _QrScanState extends State<QrScan> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => SuccessScreen(
-                              uid: code,
+                              uid: code.substring(7),
                               auth: Auth(),
                             ),
                           ),
