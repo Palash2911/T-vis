@@ -16,6 +16,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   String name = "";
   String qrID = "";
+  var st = true;
 
   @override
   void initState() {
@@ -24,11 +25,11 @@ class _SuccessScreenState extends State<SuccessScreen> {
   }
 
   Future<void> getDetails() async {
-    print(widget.uid);
     var temp = await widget.auth.getUserDetails(widget.uid);
     setState(() {
       name = temp['name'].toString();
-      qrID = temp['uid'].toString().substring(0, 7);
+      qrID = temp['uid'].toString();
+      st = temp['status'] as bool;
     });
   }
 

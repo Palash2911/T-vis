@@ -24,7 +24,7 @@ class _ProfileCardState extends State<ProfileCard> {
     var temp = await widget.auth.getUserDetails("");
     setState(() {
       name = temp['name'].toString();
-      uid = temp['uid'].toString().substring(0, 7);
+      uid = temp['uid'].toString();
     });
   }
 

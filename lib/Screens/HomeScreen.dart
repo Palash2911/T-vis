@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   var details = {};
   var dataLoaded = false;
   String uid = "";
-  var encodedJson = "";
+  var encoded = "";
   // final encrypter = encrypt.Encrypter(AES(key));
 
   @override
@@ -35,8 +35,8 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         isInside = details['status'] as bool;
         dataLoaded = true;
-        uid = details['uid'].toString().substring(0, 7);
-        encodedJson = jsonEncode(details['uid']);
+        uid = details['uid'].toString();
+        encoded = (details['uid'] + details['uuid']);
       });
     });
   }
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.all(10.0),
                               decoration: kBorder,
                               child: QrImage(
-                                data: encodedJson,
+                                data: encoded,
                                 version: QrVersions.auto,
                                 size: 270,
                                 gapless: true,

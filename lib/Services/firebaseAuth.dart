@@ -16,11 +16,10 @@ abstract class AuthClass {
   Future<bool> checkUser();
   Future<String> registerUser(
       String name, String vehicleNo, String vehicleName, String college);
-  Future<bool> updateUser(
-      String name, String phoneNo, String college);
-  Future<bool> updateVehicle(
-      String vname, String vNo);
+  Future<bool> updateUser(String name, String phoneNo, String college);
+  Future<bool> updateVehicle(String vname, String vNo);
   Future<Map<String, Object>> getUserDetails(String uid);
+  Future<bool> updateStatus(String st, String uid);
 }
 
 class Auth implements AuthClass {
@@ -95,13 +94,13 @@ class Auth implements AuthClass {
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
       var uid = _auth.currentUser?.uid;
-      users.doc(auth?.uid).set({
+      users.doc(auth?.uid.toString()).set({
         'Name': name,
         'VehicleNo': vehicleNo,
         'VehicleName': vehicleName,
         'College': college,
         'PhoneNo': auth?.phoneNumber,
-        'UserID': auth?.uid,
+        'UserID': auth?.uid.substring(0, 7),
         'Status': false,
       });
       return uid.toString();
@@ -120,16 +119,14 @@ class Auth implements AuthClass {
     String vname = "";
     String vno = "";
     String uid = "";
-    if(uuid!.isEmpty)
-      {
-        uuid = _auth.currentUser?.uid;
-      }
+    String? uuuid = _auth.currentUser?.uid;
+    if (uuid!.isNotEmpty) {
+      uuuid = uuid;
+    }
+    print(uuuid);
     bool status = false;
     num = _auth.currentUser?.phoneNumber;
-    await users
-        .doc(uuid)
-        .get()
-        .then((DocumentSnapshot query) {
+    await users.doc(uuuid.toString()).get().then((DocumentSnapshot query) {
       Map<String, dynamic> data = query.data() as Map<String, dynamic>;
       name = data["Name"].toString();
       cllg = data["College"].toString();
@@ -146,35 +143,61 @@ class Auth implements AuthClass {
       'vno': vno,
       'status': status,
       'uid': uid,
+      'uuid': uuuid!,
     };
   }
 
   @override
-  Future<bool> updateUser(String name, String phoneNo, String college) async{
-    try{
-      CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  Future<bool> updateUser(String name, String phoneNo, String college) async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
       users.doc(_auth.currentUser?.uid).update({
         "Name": name,
         "PhoneNo": phoneNo,
         "College": college,
       });
       return true;
-    }catch(e){
+    } catch (e) {
       print(e);
       return false;
     }
   }
 
   @override
-  Future<bool> updateVehicle(String vname, String vNo) async{
-    try{
-      CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  Future<bool> updateVehicle(String vname, String vNo) async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
       users.doc(_auth.currentUser?.uid).update({
         'VehicleNo': vNo,
         'VehicleName': vname,
       });
       return true;
-    }catch(e){
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> updateStatus(String st, String uid) async{
+    try {
+      CollectionReference users = FirebaseFirestore.instance.collection('Users');
+      if(st == 'allowEntry')
+        {
+          await users.doc(uid).update({
+            'Status': true
+          });
+        }
+      else if(st == 'allowExit')
+        {
+          await users.doc(uid).update({
+            'Status': false
+          });
+        }
+      return true;
+    } catch (e) {
       print(e);
       return false;
     }
