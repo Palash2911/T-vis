@@ -31,13 +31,6 @@ class Auth implements AuthClass {
   final _auth = FirebaseAuth.instance;
   var verificationId = '';
 
-  Users? _userFromFirebase(User user) {
-    if (user == null) {
-      return null;
-    }
-    return Users(uid: user.uid);
-  }
-
   @override
   Future<void> signInPhone(String phoneNo) async {
     try {
