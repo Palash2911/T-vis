@@ -25,8 +25,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
   }
 
   Future<void> _updateSt(String status) async {
-    var temp = await widget.auth
-        .updateStatus(status, widget.uid.toString());
+    var temp = await widget.auth.updateStatus(status, widget.uid.toString());
     if (temp) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -39,8 +38,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
   }
 
   Future<void> getDetails() async {
-    var temp =
-        await widget.auth.getUserDetails(widget.uid.toString());
+    var temp = await widget.auth.getUserDetails(widget.uid.toString());
     setState(() {
       name = temp['name'].toString();
       qrID = temp['uid'].toString();
@@ -57,39 +55,67 @@ class _SuccessScreenState extends State<SuccessScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 250.0,
+            height: 200.0,
             child: Lottie.asset('assets/animations/success.json'),
           ),
-          Text(
-            "QR Scan Successfully",
-            style: kNameTextStyle,
-          ),
-          const SizedBox(height: 20.0),
-          Text(
-            "Name: $name",
-            style: ktitleTextStyle,
-          ),
-          const SizedBox(height: 10.0),
-          Text("QR ID: $qrID", style: ktitleTextStyle),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  _updateSt("Decline");
-                },
-                child: st
-                    ? const Text("Decline Exit")
-                    : const Text("Decline Entry"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  st ? _updateSt("allowExit") : _updateSt("allowEntry");
-                },
-                child:
-                    st ? const Text("Allow Exit") : const Text("Allow Entry"),
-              ),
-            ],
+          Container(
+            margin: EdgeInsets.all(35),
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: kSecondaryColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "QR Scan Successfully",
+                  style: kNameTextStyle,
+                ),
+                Divider(
+                  color: Colors.grey,
+                ),
+                const SizedBox(height: 10.0),
+                Text(
+                  "Name: $name",
+                  style: ktitleTextStyle,
+                ),
+                const SizedBox(height: 10.0),
+                Text("QR ID: $qrID", style: ktitleTextStyle),
+                const SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red[400],
+                        elevation: 0,
+                      ),
+                      onPressed: () {
+                        _updateSt("Decline");
+                      },
+                      child: st
+                          ? Text(
+                              "Decline Exit",
+                              style: kButtonTextStyle,
+                            )
+                          : Text("Decline Entry", style: kButtonTextStyle),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green[400],
+                        elevation: 0,
+                      ),
+                      onPressed: () {
+                        st ? _updateSt("allowExit") : _updateSt("allowEntry");
+                      },
+                      child: st
+                          ? Text("Allow Exit", style: kButtonTextStyle)
+                          : Text("Allow Entry", style: kButtonTextStyle),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
