@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tvis/Screens/Admin/AdminProfileScreen.dart';
+import 'package:tvis/Screens/Admin/FailScreen.dart';
 import 'package:tvis/Screens/Admin/QRScanScren.dart';
 import 'package:tvis/Screens/Admin/SucessScreen.dart';
 import '../../Services/firebaseAuth.dart';
@@ -22,23 +23,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     try {
       users.where("UserID", isEqualTo: qrId).snapshots().listen(
-            (event) =>
-            event.docs.forEach(
-                  (doc) {
+            (event) => event.docs.forEach(
+              (doc) {
                 print(doc.id);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (ctx) =>
-                        SuccessScreen(
-                          auth: Auth(),
-                          uid: doc.id,
-                        ),
+                    builder: (ctx) => SuccessScreen(
+                      auth: Auth(),
+                      uid: doc.id,
+                    ),
                   ),
                 );
               },
             ),
-      );
-    }catch (e) {
+          );
+    } catch (e) {
       print(e);
     }
   }
@@ -279,6 +278,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     );
                   },
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FailScreen()),
+                    );
+                  },
+                  child: Text(" test fail"),
+                )
               ],
             ),
           ),
