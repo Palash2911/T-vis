@@ -12,7 +12,6 @@ class Users {
 }
 
 abstract class AuthClass {
-  Future<Users?> currentUser();
   Future<void> signInPhone(String phoneNo);
   Future<void> signOut();
   Future<bool> verifyOtp(String otp);
@@ -40,40 +39,43 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<Users?> currentUser() async {
-    final user = await _auth.currentUser;
-    return _userFromFirebase(user!);
-  }
-
-  @override
   Future<void> signInPhone(String phoneNo) async {
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNo,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        // await _auth.signInWithCredential(credential).then((value) {});
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          print("Invalid Number");
-        } else {
-          print(e);
-        }
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        this.verificationId = verificationId;
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        this.verificationId = verificationId;
-      },
-    );
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNo,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // await _auth.signInWithCredential(credential).then((value) {});
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          if (e.code == 'invalid-phone-number') {
+            print("Invalid Number");
+          } else {
+            print(e);
+          }
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          this.verificationId = verificationId;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          this.verificationId = verificationId;
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<bool> verifyOtp(String otp) async {
-    var cred = await _auth.signInWithCredential(PhoneAuthProvider.credential(
-      verificationId: this.verificationId,
-      smsCode: otp,
-    ));
-    return cred.user != null ? true : false;
+    try {
+      var cred = await _auth.signInWithCredential(PhoneAuthProvider.credential(
+        verificationId: this.verificationId,
+        smsCode: otp,
+      ));
+      return cred.user != null ? true : false;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   @override
@@ -83,13 +85,20 @@ class Auth implements AuthClass {
 
   @override
   Future<bool> checkUser() async {
-    var user = true;
-    final auth = FirebaseAuth.instance.currentUser;
-    CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    await users.doc(auth?.uid).get().then((datasnapshot) => {
-          if (!datasnapshot.exists) {user = false}
-        });
-    return user;
+    try {
+      var user = true;
+      final auth = FirebaseAuth.instance.currentUser;
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      await users.doc(auth?.uid).get().then(
+            (datasnapshot) => {
+              if (!datasnapshot.exists) {user = false}
+            },
+          );
+      return user;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
@@ -118,39 +127,44 @@ class Auth implements AuthClass {
 
   @override
   Future<Map<String, Object>> getUserDetails(String? uuid) async {
-    CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    String name = "";
-    String? num = "";
-    String cllg = "";
-    String vname = "";
-    String vno = "";
-    String uid = "";
-    String? uuuid = _auth.currentUser?.uid;
-    bool status = false;
-    if (uuid!.isNotEmpty) {
-      uuuid = uuid;
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      String name = "";
+      String? num = "";
+      String cllg = "";
+      String vname = "";
+      String vno = "";
+      String uid = "";
+      String? uuuid = _auth.currentUser?.uid;
+      bool status = false;
+      if (uuid!.isNotEmpty) {
+        uuuid = uuid;
+      }
+      await users.doc(uuuid.toString()).get().then((DocumentSnapshot query) {
+        Map<String, dynamic> data = query.data() as Map<String, dynamic>;
+        name = data["Name"].toString();
+        cllg = data["College"].toString();
+        vname = data["VehicleName"].toString();
+        vno = data["VehicleNo"].toString();
+        status = data["Status"];
+        uid = data["UserID"];
+      });
+      num = _auth.currentUser?.phoneNumber;
+      return {
+        'name': name,
+        'num': num.toString(),
+        'cllg': cllg,
+        'vname': vname,
+        'vno': vno,
+        'status': status,
+        'uid': uid,
+        'uuid': uuuid!,
+      };
+    } catch (e) {
+      print(e);
+      return {};
     }
-    await users.doc(uuuid.toString()).get().then((DocumentSnapshot query) {
-      Map<String, dynamic> data = query.data() as Map<String, dynamic>;
-      name = data["Name"].toString();
-      cllg = data["College"].toString();
-      vname = data["VehicleName"].toString();
-      vno = data["VehicleNo"].toString();
-      status = data["Status"];
-      uid = data["UserID"];
-    });
-
-    num = _auth.currentUser?.phoneNumber;
-    return {
-      'name': name,
-      'num': num.toString(),
-      'cllg': cllg,
-      'vname': vname,
-      'vno': vno,
-      'status': status,
-      'uid': uid,
-      'uuid': uuuid!,
-    };
   }
 
   @override
@@ -235,13 +249,19 @@ class Auth implements AuthClass {
 
   @override
   Future<int> noOfTrips() async {
-    CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    var documentCount;
-    await users
-        .doc(_auth.currentUser?.uid)
-        .collection("trips")
-        .get()
-        .then((value) => documentCount = value.docs.length);
-    return documentCount;
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      var documentCount;
+      await users
+          .doc(_auth.currentUser?.uid)
+          .collection("trips")
+          .get()
+          .then((value) => documentCount = value.docs.length);
+      return documentCount;
+    } catch (e) {
+      print(e);
+      return 0;
+    }
   }
 }
