@@ -27,13 +27,15 @@ class _SuccessScreenState extends State<SuccessScreen> {
   Future<void> _updateSt(String status) async {
     var temp = await widget.auth.updateStatus(status, widget.uid.toString());
     if (temp) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (ctx) => AdminHomeScreen(
-            auth: Auth(),
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (ctx) => AdminHomeScreen(
+              auth: Auth(),
+            ),
           ),
-        ),
-      );
+        );
+      });
     }
   }
 
@@ -82,7 +84,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 const SizedBox(height: 10.0),
                 Text("QR ID: $qrID", style: ktitleTextStyle),
                 const SizedBox(height: 20.0),
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
@@ -91,6 +93,16 @@ class _SuccessScreenState extends State<SuccessScreen> {
                         elevation: 0,
                       ),
                       onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Lottie.asset(
+                                'assets/animations/reject.json',
+                              ),
+                            );
+                          },
+                        );
                         _updateSt("Decline");
                       },
                       child: st
@@ -106,6 +118,16 @@ class _SuccessScreenState extends State<SuccessScreen> {
                         elevation: 0,
                       ),
                       onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Lottie.asset(
+                                'assets/animations/accept.json',
+                              ),
+                            );
+                          },
+                        );
                         st ? _updateSt("allowExit") : _updateSt("allowEntry");
                       },
                       child: st

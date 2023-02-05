@@ -74,6 +74,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     const SizedBox(height: 20.0),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(

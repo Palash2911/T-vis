@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tvis/Screens/Admin/AdminProfileScreen.dart';
@@ -48,7 +49,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
-          "assets/images/logo2.png",
+          "assets/images/logo.png",
           height: 50,
           width: 50,
         ),
@@ -85,16 +86,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         child: Container(
-          // color: kSecondaryColor,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              colorFilter:
-                  ColorFilter.mode(Colors.white54, BlendMode.softLight),
-              opacity: 10.0,
-              image: AssetImage("assets/images/bg.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
+          color: kSecondaryColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -182,79 +174,103 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(
-                    horizontal: 32.0, vertical: 10.0),
-                padding: EdgeInsets.all(10.0),
-                decoration: kBorder,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => QrScan(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: kfillContainer,
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.qr_code_scanner_rounded,
-                                size: 120.0,
-                                color: kSecondaryColor,
-                              ),
-                              Text(
-                                "Scan QR",
-                                style: kButtonTextStyle.copyWith(
-                                    color: kSecondaryColor),
-                              )
-                            ],
-                          ),
+              SizedBox(
+                height: 250,
+                width: 250,
+                child: FittedBox(
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QrScan(),
                         ),
-                      ),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.qr_code_scanner_rounded,
+                      size: 35,
                     ),
-                    const SizedBox(
-                      width: 20.0,
+                    label: Text(
+                      "Scan QR",
+                      style: ktitleTextStyle,
                     ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AdminProfile(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: kfillContainer,
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.person,
-                                size: 120.0,
-                                color: kSecondaryColor,
-                              ),
-                              Text(
-                                "Profile",
-                                style: kButtonTextStyle.copyWith(
-                                    color: kSecondaryColor),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
+              // Container(
+              //   margin: const EdgeInsets.symmetric(
+              //       horizontal: 32.0, vertical: 10.0),
+              //   padding: EdgeInsets.all(10.0),
+              //   decoration: kBorder,
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                 builder: (context) => QrScan(),
+              //               ),
+              //             );
+              //           },
+              //           child: Container(
+              //             padding: EdgeInsets.all(10.0),
+              //             decoration: kfillContainer,
+              //             child: Column(
+              //               children: [
+              //                 Icon(
+              //                   Icons.qr_code_scanner_rounded,
+              //                   size: 120.0,
+              //                   color: kSecondaryColor,
+              //                 ),
+              //                 Text(
+              //                   "Scan QR",
+              //                   style: kButtonTextStyle.copyWith(
+              //                       color: kSecondaryColor),
+              //                 )
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       const SizedBox(
+              //         width: 20.0,
+              //       ),
+              //       Expanded(
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                 builder: (context) => AdminProfile(),
+              //               ),
+              //             );
+              //           },
+              //           child: Container(
+              //             padding: EdgeInsets.all(10.0),
+              //             decoration: kfillContainer,
+              //             child: Column(
+              //               children: [
+              //                 Icon(
+              //                   Icons.person,
+              //                   size: 120.0,
+              //                   color: kSecondaryColor,
+              //                 ),
+              //                 Text(
+              //                   "Profile",
+              //                   style: kButtonTextStyle.copyWith(
+              //                       color: kSecondaryColor),
+              //                 )
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

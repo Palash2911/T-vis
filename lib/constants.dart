@@ -27,7 +27,7 @@ TextStyle kWelcomeStyle = GoogleFonts.poppins(
     fontSize: 40.0, fontWeight: FontWeight.bold, color: kSecondaryColor);
 // TextStyles - main
 TextStyle kNameTextStyle =
-    GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.bold);
+    GoogleFonts.poppins(fontSize: 21.0, fontWeight: FontWeight.bold);
 TextStyle kAccountTextStyle =
     GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w500);
 TextStyle ktitleTextStyle =
