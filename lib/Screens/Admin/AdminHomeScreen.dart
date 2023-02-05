@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tvis/Screens/Admin/AdminProfileScreen.dart';
-import 'package:tvis/Screens/Admin/FailScreen.dart';
 import 'package:tvis/Screens/Admin/QRScanScren.dart';
 import 'package:tvis/Screens/Admin/SucessScreen.dart';
 import '../../Services/firebaseAuth.dart';
