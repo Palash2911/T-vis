@@ -15,7 +15,6 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-
   var noTrips = 0;
 
   @override
@@ -24,7 +23,7 @@ class _HistoryPageState extends State<HistoryPage> {
     super.initState();
   }
 
-  Future<void> _getTrips() async{
+  Future<void> _getTrips() async {
     var temp = await widget.auth.noOfTrips();
     setState(() {
       noTrips = temp;
@@ -34,18 +33,20 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(12.0, 2.0, 0.0, 0.0),
+          child: Text(
+            'History',
+            style: kNameTextStyle,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(32.0, 32.0, 0.0, 0.0),
-                child: Text(
-                  'History',
-                  style: kNameTextStyle,
-                ),
-              ),
               Column(
                 children: [
                   Container(
@@ -65,10 +66,9 @@ class _HistoryPageState extends State<HistoryPage> {
                               color: kPrimaryColor,
                             ),
                             title: Text(
-                              'Total Number of trips',
+                              'Total Entries',
                               style: ktitleTextStyle,
                             ),
-                            subtitle: const Text('Today'),
                             trailing: Text(
                               '$noTrips',
                               style: ktitleTextStyle,
@@ -98,12 +98,12 @@ class _HistoryPageState extends State<HistoryPage> {
                         );
                       }
                       return Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 32.0,
-                            vertical: 15.0,
-                          ),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 32.0,
+                          vertical: 25.0,
+                        ),
                         decoration: kBorder,
-                        height: 400,
+                        height: 370,
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: trips.length,

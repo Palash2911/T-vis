@@ -52,30 +52,32 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.center,
             height: double.infinity,
             width: double.infinity,
-            child: Container(
+            child: SizedBox(
               height: 500.0,
               child: Lottie.asset('assets/animations/loading.json'),
             ),
           )
         : Scaffold(
+            appBar: AppBar(
+              title: Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 2.0, 0.0, 0.0),
+                child: Text(
+                  'Dashboard',
+                  style: kNameTextStyle,
+                ),
+              ),
+            ),
             body: SafeArea(
               child: Container(
                 color: kSecondaryColor,
-                // decoration: BoxDecoration(
-                //   image: DecorationImage(
-                //     image: AssetImage("assets/images/bg2.png"),
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 30.0,
-                    ),
+                    const SizedBox(height: 30.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
+                          margin: const EdgeInsets.all(5),
                           width: 110.0,
                           decoration: kBorder,
                           padding: const EdgeInsets.all(10.0),
@@ -87,13 +89,14 @@ class _HomePageState extends State<HomePage> {
                                     isInside ? Colors.green : Colors.red,
                               ),
                               const SizedBox(width: 10.0),
-                              Text(isInside ? "Inside" : "Outside"),
+                              Text(
+                                isInside ? "Inside" : "Outside",
+                                style: ktitleTextStyle,
+                              ),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 30.0,
-                        )
+                        const SizedBox(width: 30.0),
                       ],
                     ),
                     Expanded(
@@ -102,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(7.0),
                               decoration: kBorder,
                               child: QrImage(
                                 data: encoded,
@@ -120,9 +123,7 @@ class _HomePageState extends State<HomePage> {
                                 },
                               ),
                             ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
+                            const SizedBox(height: 20.0),
                             Container(
                               decoration: kBorder,
                               padding: const EdgeInsets.all(10.0),

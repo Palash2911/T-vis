@@ -59,30 +59,37 @@ class _ProfilePageState extends State<ProfilePage> {
             alignment: Alignment.center,
             height: double.infinity,
             width: double.infinity,
-            child: Container(
+            child: SizedBox(
               height: 500.0,
               child: Lottie.asset('assets/animations/loading.json'),
             ),
           )
         : Scaffold(
+            appBar: AppBar(
+              title: Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 2.0, 0.0, 0.0),
+                child: Text(
+                  'Profile',
+                  style: kNameTextStyle,
+                ),
+              ),
+            ),
             body: SingleChildScrollView(
               child: SafeArea(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(32.0, 32.0, 0.0, 0.0),
-                      child: Text(
-                        'Profile',
-                        style: kNameTextStyle,
-                      ),
+                    const SizedBox(
+                      height: 15,
                     ),
                     ProfileCard(
                       auth: Auth(),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 32.0, vertical: 10.0),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 32.0,
+                        vertical: 10.0,
+                      ),
                       decoration: kBorder,
                       child: Column(
                         children: [
@@ -99,8 +106,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Profile',
                                 style: ktitleTextStyle,
                               ),
-                              subtitle: Text('Manage Profile'),
-                              trailing: Icon(Icons.arrow_forward_ios_rounded),
+                              subtitle: const Text('Manage Profile'),
+                              trailing:
+                                  const Icon(Icons.arrow_forward_ios_rounded),
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -113,7 +121,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                             ),
                           ),
-                          // Vechical Option
                           Card(
                             elevation: 0.0,
                             child: ListTile(
@@ -123,11 +130,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: kPrimaryColor,
                               ),
                               title: Text(
-                                'Vehical Information',
+                                'Vehicle Information',
                                 style: ktitleTextStyle,
                               ),
-                              subtitle: Text('Manage Vechical'),
-                              trailing: Icon(Icons.arrow_forward_ios_rounded),
+                              subtitle: const Text('Manage Vehicle'),
+                              trailing:
+                                  const Icon(Icons.arrow_forward_ios_rounded),
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -153,8 +161,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Sign Out',
                                 style: ktitleTextStyle,
                               ),
-                              subtitle: Text('Done'),
-                              trailing: Icon(Icons.arrow_forward_ios_rounded),
+                              subtitle: const Text('Done'),
+                              trailing:
+                                  const Icon(Icons.arrow_forward_ios_rounded),
                               onTap: () => signOut(context),
                             ),
                           ),
@@ -170,15 +179,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Switch to Admin',
                                 style: ktitleTextStyle,
                               ),
-                              subtitle: Text('use admin app'),
-                              trailing: Icon(Icons.arrow_forward_ios_rounded),
+                              subtitle: const Text('use admin app'),
+                              trailing:
+                                  const Icon(Icons.arrow_forward_ios_rounded),
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AdminHomeScreen(
-                                            auth: Auth(),
-                                          )),
+                                    builder: (context) => AdminHomeScreen(
+                                      auth: Auth(),
+                                    ),
+                                  ),
                                 );
                               },
                             ),
