@@ -45,6 +45,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
@@ -78,217 +79,184 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               title: const Text("Log Out"),
               onTap: () {},
             ),
-            // ListTile(
-            //   title: Text("Enter QR ID"),
-            //   onTap: () {},
-            // ),
+            Divider(),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            // color: kSecondaryColor,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                colorFilter:
-                    ColorFilter.mode(Colors.white54, BlendMode.softLight),
-                opacity: 10.0,
-                image: AssetImage("assets/images/bg.png"),
-                fit: BoxFit.cover,
-              ),
+      body: SafeArea(
+        child: Container(
+          // color: kSecondaryColor,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              colorFilter:
+                  ColorFilter.mode(Colors.white54, BlendMode.softLight),
+              opacity: 10.0,
+              image: AssetImage("assets/images/bg.png"),
+              fit: BoxFit.cover,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32.0,
-                    vertical: 30.0,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 32.0,
+                  vertical: 30.0,
+                ),
+                decoration: kBorder,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.receipt_long_rounded,
+                    size: 50.0,
+                    color: kPrimaryColor,
                   ),
-                  decoration: kBorder,
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.receipt_long_rounded,
-                      size: 50.0,
-                      color: kPrimaryColor,
-                    ),
-                    title: Text(
-                      'Vehicles in campus',
-                      style: ktitleTextStyle,
-                    ),
-                    subtitle: const Text('Today'),
-                    trailing: Text(
-                      '100',
-                      style: ktitleTextStyle,
-                    ),
+                  title: Text(
+                    'Vehicles in campus',
+                    style: ktitleTextStyle,
+                  ),
+                  subtitle: const Text('Today'),
+                  trailing: Text(
+                    '100',
+                    style: ktitleTextStyle,
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 32.0, vertical: 10.0),
-                  decoration: kBorder,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Card(
-                        elevation: 0.0,
-                        color: Colors.transparent,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: 'QR ID ',
-                                      style: kprofileDescriptionText,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 9.0),
-                              TextField(
-                                controller: _qrIdController,
-                                decoration: InputDecoration(
-                                  counterText: '',
-                                  prefixIcon:
-                                      const Icon(Icons.numbers_outlined),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 32.0, vertical: 10.0),
+                decoration: kBorder,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Card(
+                      elevation: 0.0,
+                      color: Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'QR ID ',
+                                    style: kprofileDescriptionText,
                                   ),
-                                ),
-                                // keyboardType: TextInputType.phone,
-                                maxLength: 7,
+                                ],
                               ),
+                            ),
+                            const SizedBox(height: 9.0),
+                            TextField(
+                              controller: _qrIdController,
+                              decoration: InputDecoration(
+                                counterText: '',
+                                prefixIcon: const Icon(Icons.numbers_outlined),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              // keyboardType: TextInputType.phone,
+                              maxLength: 7,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ElevatedButton(
+                        onPressed: _getDetails,
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: Text(
+                            "Enter ",
+                            style:
+                                kprofileDescriptionText.merge(const TextStyle(
+                              color: Colors.white,
+                            )),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 32.0, vertical: 10.0),
+                padding: EdgeInsets.all(10.0),
+                decoration: kBorder,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QrScan(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          decoration: kfillContainer,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.qr_code_scanner_rounded,
+                                size: 120.0,
+                                color: kSecondaryColor,
+                              ),
+                              Text(
+                                "Scan QR",
+                                style: kButtonTextStyle.copyWith(
+                                    color: kSecondaryColor),
+                              )
                             ],
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: ElevatedButton(
-                          onPressed: _getDetails,
-                          child: Padding(
-                            padding: const EdgeInsets.all(9.0),
-                            child: Text(
-                              "Enter ",
-                              style:
-                                  kprofileDescriptionText.merge(const TextStyle(
-                                color: Colors.white,
-                              )),
+                    ),
+                    const SizedBox(
+                      width: 20.0,
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AdminProfile(),
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 32.0, vertical: 10.0),
-                  padding: EdgeInsets.all(10.0),
-                  decoration: kBorder,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => QrScan(),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          decoration: kfillContainer,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                size: 120.0,
+                                color: kSecondaryColor,
                               ),
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10.0),
-                            decoration: kfillContainer,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.qr_code_scanner_rounded,
-                                  size: 120.0,
-                                  color: kSecondaryColor,
-                                ),
-                                Text(
-                                  "Scan QR",
-                                  style: kButtonTextStyle.copyWith(
-                                      color: kSecondaryColor),
-                                )
-                              ],
-                            ),
+                              Text(
+                                "Profile",
+                                style: kButtonTextStyle.copyWith(
+                                    color: kSecondaryColor),
+                              )
+                            ],
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 20.0,
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AdminProfile(),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10.0),
-                            decoration: kfillContainer,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.person,
-                                  size: 120.0,
-                                  color: kSecondaryColor,
-                                ),
-                                Text(
-                                  "Profile",
-                                  style: kButtonTextStyle.copyWith(
-                                      color: kSecondaryColor),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                FloatingActionButton.extended(
-                  label: Text(
-                    "Test",
-                    style: ktitleTextStyle,
-                  ),
-                  icon: Icon(Icons.qr_code_scanner_rounded),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SuccessScreen(
-                          uid: "",
-                          auth: Auth(),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FailScreen()),
-                    );
-                  },
-                  child: Text(" test fail"),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
