@@ -33,7 +33,7 @@ TextStyle kAccountTextStyle =
 TextStyle ktitleTextStyle =
     GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w600);
 TextStyle kButtonTextStyle =
-    GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w600);
+    GoogleFonts.poppins(fontSize: 19.0, fontWeight: FontWeight.w600);
 
 //TextStyles -- Profile Page
 TextStyle kprofileDescriptionText = GoogleFonts.poppins(

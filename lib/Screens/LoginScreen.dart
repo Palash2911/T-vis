@@ -16,13 +16,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _phonecontroller = TextEditingController();
-  String get phoneNo => "+91${_phonecontroller.text}";
+  final TextEditingController _phoneController = TextEditingController();
+  String get phoneNo => "+91${_phoneController.text}";
 
   @override
   void initState() {
-    _phonecontroller.text = "";
-    //set the initial value of text field
+    _phoneController.text = "";
     super.initState();
   }
 
@@ -50,23 +49,25 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Container(
             alignment: Alignment.bottomCenter,
             padding:
-                const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20.0),
+                const EdgeInsets.symmetric(horizontal: 35.0, vertical: 45.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 20),
                 SizedBox(
-                  height: 270.0,
+                  height: 280.0,
                   child: Lottie.asset('assets/animations/login.json'),
                 ),
                 Text(
-                  'Login',
-                  style: kh1TextStyle,
+                  'Login / Sign Up',
+                  style: kh1TextStyle.merge(TextStyle(
+                    fontSize: 22,
+                  )),
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  controller: _phonecontroller,
+                  controller: _phoneController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.phone),
                     labelText: 'Enter your mobile number',
@@ -78,36 +79,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 18),
                 ElevatedButton(
-                  onPressed: () => sendOtp(context),
-                  child: Text(
-                    "Generate OTP",
-                    style: kButtonTextStyle,
-                  ),
-                ),
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: 60.0,
-                //   child: ElevatedButton(
-                //     onPressed: () => sendOtp(context),
-                //     child: const Text('Generate OTP'),
-                //   ),
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Dont have an account? ",
-                      style: kAccountTextStyle,
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        "Create one ",
-                        style: ktitleTextStyle.copyWith(color: kPrimaryColor),
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)
                       ),
-                      onTap: () {},
+                  ),
+                    onPressed: () => sendOtp(context),
+                    child: Text(
+                      "Generate OTP",
+                      style: kButtonTextStyle,
                     ),
-                  ],
-                ),
+                  ),
               ],
             ),
           ),

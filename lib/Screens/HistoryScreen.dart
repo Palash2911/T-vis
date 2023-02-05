@@ -85,7 +85,6 @@ class _HistoryPageState extends State<HistoryPage> {
                         return const Text("Loading..");
                       }
                       List<Trips> trips = snapshot.data as List<Trips>;
-                      print(snapshot.data);
                       if (trips.isEmpty) {
                         return const Padding(
                           padding: EdgeInsets.fromLTRB(0, 100, 0, 0),

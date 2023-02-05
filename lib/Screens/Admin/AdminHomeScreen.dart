@@ -25,7 +25,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       users.where("UserID", isEqualTo: qrId).snapshots().listen(
             (event) => event.docs.forEach(
               (doc) {
-                print(doc.id);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (ctx) => SuccessScreen(

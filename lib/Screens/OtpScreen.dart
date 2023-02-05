@@ -35,7 +35,6 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   Future<void> verifyOtp(BuildContext ctx) async {
-    print(otp.length);
     if (otp.length == 6) {
       var isVerified = await widget.auth.verifyOtp(otp);
       if (isVerified == true) {
@@ -74,18 +73,14 @@ class _OtpScreenState extends State<OtpScreen> {
         child: SafeArea(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+            const EdgeInsets.symmetric(horizontal: 35.0, vertical: 45.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 20),
                 SizedBox(
-                  height: 270.0,
+                  height: 280.0,
                   child: Lottie.asset('assets/animations/login.json'),
-                ),
-                Text(
-                  'Login',
-                  style: kh1TextStyle,
                 ),
                 const SizedBox(height: 20),
                 TextField(
@@ -102,10 +97,18 @@ class _OtpScreenState extends State<OtpScreen> {
                 const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
-                  height: 60.0,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40.0, vertical: 10.0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                    ),
                     onPressed: () => verifyOtp(context),
-                    child: const Text('Verify OTP'),
+                    child: Text(
+                      'Verify OTP',
+                      style: kButtonTextStyle,
+                    ),
                   ),
                 ),
               ],
