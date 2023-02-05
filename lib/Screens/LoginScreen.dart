@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvis/Screens/OtpScreen.dart';
-import 'package:tvis/Screens/RegisterScreen.dart';
 import 'package:tvis/constants.dart';
 
 import '../Services/firebaseAuth.dart';

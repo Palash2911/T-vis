@@ -32,24 +32,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void signOut(BuildContext ctx) async {
     await widget.auth.signOut();
-    // if (ctx.mounted) {
-    //   Fluttertoast.showToast(
-    //     msg: "Signed Out Successfully",
-    //     toastLength: Toast.LENGTH_SHORT,
-    //     timeInSecForIosWeb: 1,
-    //     backgroundColor: Colors.black,
-    //     textColor: Colors.white,
-    //     fontSize: 16.0,
-    //   );
-    //   Navigator.pushReplacement(
-    //     ctx,
-    //     MaterialPageRoute(
-    //       builder: (context) => LoginScreen(
-    //         auth: widget.auth,
-    //       ),
-    //     ),
-    //   );
-    // }
+    Fluttertoast.showToast(
+      msg: "Signed Out Successfully",
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+    Navigator.pushReplacement(
+      ctx,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(
+          auth: widget.auth,
+        ),
+      ),
+    );
   }
 
   @override

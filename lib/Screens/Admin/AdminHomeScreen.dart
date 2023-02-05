@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tvis/Screens/Admin/AdminProfileScreen.dart';
-import 'package:tvis/Screens/Admin/FailScreen.dart';
 import 'package:tvis/Screens/Admin/QRScanScren.dart';
 import 'package:tvis/Screens/Admin/SucessScreen.dart';
 import '../../Services/firebaseAuth.dart';
@@ -19,6 +18,20 @@ class AdminHomeScreen extends StatefulWidget {
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   final TextEditingController _qrIdController = TextEditingController();
   String get qrId => _qrIdController.text;
+  var vehCnt = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _getVeh();
+  }
+
+  Future<void> _getVeh() async{
+      var temp = await widget.auth.noOfVehicles();
+      setState(() {
+        vehCnt = temp;
+      });
+  }
 
   Future<void> _getDetails() async {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
@@ -108,7 +121,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ),
                   subtitle: const Text('Today'),
                   trailing: Text(
-                    '100',
+                    '$vehCnt',
                     style: ktitleTextStyle,
                   ),
                 ),
