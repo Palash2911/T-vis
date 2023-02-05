@@ -73,7 +73,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   "QR Scan Successfully",
                   style: kNameTextStyle,
                 ),
-                Divider(
+                const Divider(
                   color: Colors.grey,
                 ),
                 const SizedBox(height: 10.0),
