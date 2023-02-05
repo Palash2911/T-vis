@@ -40,14 +40,11 @@ class _OtpScreenState extends State<OtpScreen> {
       if (isVerified == true) {
         var isUser = await widget.auth.checkUser();
         if (isUser) {
-          if (ctx.mounted) {
             Navigator.pushReplacement(
               ctx,
               MaterialPageRoute(builder: (context) => bottomNavBar()),
             );
-          }
         } else {
-          if (ctx.mounted) {
             Navigator.pushReplacement(
               ctx,
               MaterialPageRoute(
@@ -56,7 +53,6 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               ),
             );
-          }
         }
       } else {
         print("Something went wrong");

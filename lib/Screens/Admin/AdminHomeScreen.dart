@@ -18,6 +18,20 @@ class AdminHomeScreen extends StatefulWidget {
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   final TextEditingController _qrIdController = TextEditingController();
   String get qrId => _qrIdController.text;
+  var vehCnt = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _getVeh();
+  }
+
+  Future<void> _getVeh() async{
+      var temp = await widget.auth.noOfVehicles();
+      setState(() {
+        vehCnt = temp;
+      });
+  }
 
   Future<void> _getDetails() async {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
@@ -116,7 +130,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ),
                   subtitle: const Text('Today'),
                   trailing: Text(
-                    '100',
+                    '$vehCnt',
                     style: ktitleTextStyle,
                   ),
                 ),

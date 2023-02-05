@@ -27,14 +27,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     var user =
         await widget.auth.registerUser(name, vehNo, vehName, cllg.toString());
     if (user.isNotEmpty) {
-      if (ctx.mounted) {
         Navigator.pushReplacement(
           ctx,
           MaterialPageRoute(
             builder: (context) => bottomNavBar(),
           ),
         );
-      }
     } else {
       print("Something Went Wrong");
     }

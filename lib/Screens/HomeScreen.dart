@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _getDetails() async {
     details = await widget.auth.getUserDetails("");
+    var cnt = await widget.auth.noOfVehicles();
     Future.delayed(const Duration(milliseconds: 450), () {
       setState(() {
         isInside = details['status'] as bool;

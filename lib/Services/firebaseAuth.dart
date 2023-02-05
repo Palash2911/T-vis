@@ -25,6 +25,7 @@ abstract class AuthClass {
   List<Trips> tripsFromFirestore(QuerySnapshot snapshot);
   Stream<List<Trips>> listTrips();
   Future<int> noOfTrips();
+  Future<int> noOfVehicles();
 }
 
 class Auth implements AuthClass {
@@ -252,6 +253,23 @@ class Auth implements AuthClass {
           .get()
           .then((value) => documentCount = value.docs.length);
       return documentCount;
+    } catch (e) {
+      print(e);
+      return 0;
+    }
+  }
+
+  @override
+  Future<int> noOfVehicles() async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      var vehCount;
+      await users
+          .where("Status", isEqualTo: true)
+          .get()
+          .then((value) => vehCount = value.docs.length);
+      return vehCount;
     } catch (e) {
       print(e);
       return 0;
