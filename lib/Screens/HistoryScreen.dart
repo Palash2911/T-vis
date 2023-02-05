@@ -42,13 +42,14 @@ class _HistoryPageState extends State<HistoryPage> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 children: [
+                  const SizedBox(height: 21,),
                   Container(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 32.0,

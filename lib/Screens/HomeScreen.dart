@@ -72,13 +72,13 @@ class _HomePageState extends State<HomePage> {
                 color: kSecondaryColor,
                 child: Column(
                   children: [
-                    const SizedBox(height: 30.0),
+                    const SizedBox(height: 20.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          margin: const EdgeInsets.all(5),
-                          width: 110.0,
+                          margin: const EdgeInsets.fromLTRB(0.0, 10, 25, 0.0),
+                          width: 126.0,
                           decoration: kBorder,
                           padding: const EdgeInsets.all(10.0),
                           child: Row(
@@ -96,7 +96,6 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                        const SizedBox(width: 30.0),
                       ],
                     ),
                     Expanded(
