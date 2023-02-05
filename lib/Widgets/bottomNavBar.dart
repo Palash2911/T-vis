@@ -35,7 +35,7 @@ class _bottomNavBarState extends State<bottomNavBar> {
         color: kSecondaryColor,
       ),
       Icon(
-        Icons.manage_history_rounded,
+        Icons.history_rounded,
         size: 30,
         color: kSecondaryColor,
       ),
@@ -53,7 +53,7 @@ class _bottomNavBarState extends State<bottomNavBar> {
         backgroundColor: kSecondaryColor,
         items: _icons,
         animationCurve: Curves.easeInOut,
-        animationDuration: const Duration(milliseconds: 360),
+        animationDuration: const Duration(milliseconds: 300),
         onTap: (index) {
           setState(() {
             _page = index;
