@@ -1,24 +1,16 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tvis/Screens/LoginScreen.dart';
-import 'package:tvis/Widgets/bottomNavBar.dart';
-import 'Services/firebaseAuth.dart';
+import 'package:tvis/Screens/SpalshScreen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(Tvis());
-}
+void main() => runApp(const Tvis());
 
 class Tvis extends StatelessWidget {
+  const Tvis({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FirebaseAuth.instance.currentUser?.uid == null
-          ? LoginScreen(auth: Auth())
-          : bottomNavBar(),
+      home: SplashScreen(),
     );
   }
 }
