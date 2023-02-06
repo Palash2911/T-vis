@@ -9,6 +9,7 @@ class SuccessScreen extends StatefulWidget {
   final String uid;
   final Auth auth;
   SuccessScreen({required this.uid, required this.auth});
+
   @override
   State<SuccessScreen> createState() => _SuccessScreenState();
 }
@@ -27,7 +28,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
   Future<void> _updateSt(String status) async {
     var temp = await widget.auth.updateStatus(status, widget.uid.toString());
     if (temp) {
-      Future.delayed(const Duration(milliseconds: 1000), () {
+      Future.delayed(const Duration(milliseconds: 1100), () {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (ctx) => AdminHomeScreen(
@@ -61,8 +62,8 @@ class _SuccessScreenState extends State<SuccessScreen> {
             child: Lottie.asset('assets/animations/success.json'),
           ),
           Container(
-            margin: EdgeInsets.all(35),
-            padding: EdgeInsets.all(15),
+            margin: const EdgeInsets.all(35),
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: kSecondaryColor,
               borderRadius: BorderRadius.circular(20),

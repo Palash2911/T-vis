@@ -9,7 +9,7 @@ import '../../constants.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   final Auth auth;
-  const AdminHomeScreen({required this.auth});
+  const AdminHomeScreen({super.key, required this.auth});
 
   @override
   State<AdminHomeScreen> createState() => _AdminHomeScreenState();
@@ -26,11 +26,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     _getVeh();
   }
 
-  Future<void> _getVeh() async{
-      var temp = await widget.auth.noOfVehicles();
-      setState(() {
-        vehCnt = temp;
-      });
+  Future<void> _getVeh() async {
+    var temp = await widget.auth.noOfVehicles();
+    setState(() {
+      vehCnt = temp;
+    });
   }
 
   Future<void> _getDetails() async {
@@ -92,7 +92,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               title: const Text("Log Out"),
               onTap: () {},
             ),
-            Divider(),
+            const Divider(),
           ],
         ),
       ),
@@ -188,21 +188,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
               ),
               SizedBox(
-                height: 250,
-                width: 250,
+                height: 180,
+                width: 180,
                 child: FittedBox(
                   child: FloatingActionButton.extended(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => QrScan(),
+                          builder: (context) => const QrScan(),
                         ),
                       );
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.qr_code_scanner_rounded,
-                      size: 35,
+                      size: 30,
                     ),
                     label: Text(
                       "Scan QR",
@@ -211,79 +211,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ),
                 ),
               ),
-              // Container(
-              //   margin: const EdgeInsets.symmetric(
-              //       horizontal: 32.0, vertical: 10.0),
-              //   padding: EdgeInsets.all(10.0),
-              //   decoration: kBorder,
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: GestureDetector(
-              //           onTap: () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) => QrScan(),
-              //               ),
-              //             );
-              //           },
-              //           child: Container(
-              //             padding: EdgeInsets.all(10.0),
-              //             decoration: kfillContainer,
-              //             child: Column(
-              //               children: [
-              //                 Icon(
-              //                   Icons.qr_code_scanner_rounded,
-              //                   size: 120.0,
-              //                   color: kSecondaryColor,
-              //                 ),
-              //                 Text(
-              //                   "Scan QR",
-              //                   style: kButtonTextStyle.copyWith(
-              //                       color: kSecondaryColor),
-              //                 )
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //       const SizedBox(
-              //         width: 20.0,
-              //       ),
-              //       Expanded(
-              //         child: GestureDetector(
-              //           onTap: () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) => AdminProfile(),
-              //               ),
-              //             );
-              //           },
-              //           child: Container(
-              //             padding: EdgeInsets.all(10.0),
-              //             decoration: kfillContainer,
-              //             child: Column(
-              //               children: [
-              //                 Icon(
-              //                   Icons.person,
-              //                   size: 120.0,
-              //                   color: kSecondaryColor,
-              //                 ),
-              //                 Text(
-              //                   "Profile",
-              //                   style: kButtonTextStyle.copyWith(
-              //                       color: kSecondaryColor),
-              //                 )
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),
