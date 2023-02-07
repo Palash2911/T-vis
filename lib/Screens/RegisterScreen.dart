@@ -17,15 +17,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _namecontroller = TextEditingController();
   final TextEditingController _vehNocontroller = TextEditingController();
-  final TextEditingController _vehNamecontroller = TextEditingController();
   String get vehNo => _vehNocontroller.text;
   String get name => _namecontroller.text;
-  String get vehName => _vehNamecontroller.text;
+  String? vehType;
   String? cllg;
+  String? gender;
 
   Future<void> register(BuildContext ctx) async {
     var user =
-        await widget.auth.registerUser(name, vehNo, vehName, cllg.toString());
+        await widget.auth.registerUser(name, vehNo, vehType.toString(), cllg.toString(), gender.toString());
     if (user.isNotEmpty) {
         Navigator.pushReplacement(
           ctx,
@@ -72,14 +72,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      TextFormField(
-                        controller: _vehNamecontroller,
+                      DropdownButtonFormField(
                         decoration: InputDecoration(
-                          labelText: 'Vehicle Name',
-                          prefixIcon: const Icon(Icons.directions_car),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
+                            prefixIcon: const Icon(Icons.male),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            labelText: 'Gender'),
+                        value: gender,
+                        items: ['Male', 'Female'].map((gen) {
+                          return DropdownMenuItem(
+                            value: gen,
+                            child: Text(gen),
+                            onTap: () {
+                              setState(() {
+                                gender = gen;
+                              });
+                            },
+                          );
+                        }).toList(),
+                        onChanged: (value) {},
+                      ),
+                      const SizedBox(height: 20),
+                      DropdownButtonFormField(
+                        decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.directions_car),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            labelText: 'Vehicle Type'),
+                        value: vehType,
+                        items: ['2 Wheeler', '4 Wheeler'].map((vtype) {
+                          return DropdownMenuItem(
+                            value: vtype,
+                            child: Text(vtype),
+                            onTap: () {
+                              setState(() {
+                                vehType = vtype;
+                              });
+                            },
+                          );
+                        }).toList(),
+                        onChanged: (value) {},
                       ),
                       const SizedBox(height: 20),
                       TextFormField(

@@ -15,9 +15,9 @@ abstract class AuthClass {
   Future<bool> verifyOtp(String otp);
   Future<bool> checkUser();
   Future<String> registerUser(
-      String name, String vehicleNo, String vehicleName, String college);
-  Future<bool> updateUser(String name, String phoneNo, String college);
-  Future<bool> updateVehicle(String vname, String vNo);
+      String name, String vehicleNo, String vehicleType, String college, String gender);
+  Future<bool> updateUser(String name, String phoneNo, String gender);
+  Future<bool> updateVehicle(String vType, String vNo, String college);
   Future<Map<String, Object>> getUserDetails(String uid);
   Future<bool> updateStatus(String st, String uid);
   List<Trips> tripsFromFirestore(QuerySnapshot snapshot);
@@ -95,7 +95,7 @@ class Auth implements AuthClass {
 
   @override
   Future<String> registerUser(
-      String name, String vehicleNo, String vehicleName, String college) async {
+      String name, String vehicleNo, String vehicleType, String college, String gender) async {
     try {
       final auth = FirebaseAuth.instance.currentUser;
       CollectionReference users =
@@ -103,8 +103,9 @@ class Auth implements AuthClass {
       var uid = _auth.currentUser?.uid;
       users.doc(auth?.uid.toString()).set({
         'Name': name,
+        'Gender': gender,
         'VehicleNo': vehicleNo,
-        'VehicleName': vehicleName,
+        'VehicleType': vehicleType,
         'College': college,
         'PhoneNo': auth?.phoneNumber,
         'UserID': auth?.uid.substring(0, 7),
@@ -125,9 +126,10 @@ class Auth implements AuthClass {
       String name = "";
       String? num = "";
       String cllg = "";
-      String vname = "";
+      String vtype = "";
       String vno = "";
       String uid = "";
+      String gender = "";
       String? uuuid = _auth.currentUser?.uid;
       bool status = false;
       if (uuid!.isNotEmpty) {
@@ -137,19 +139,21 @@ class Auth implements AuthClass {
         Map<String, dynamic> data = query.data() as Map<String, dynamic>;
         name = data["Name"].toString();
         cllg = data["College"].toString();
-        vname = data["VehicleName"].toString();
+        vtype = data["VehicleType"].toString();
         vno = data["VehicleNo"].toString();
         status = data["Status"];
         uid = data["UserID"];
+        gender = data["Gender"];
       });
       num = _auth.currentUser?.phoneNumber;
       return {
         'name': name,
         'num': num.toString(),
         'cllg': cllg,
-        'vname': vname,
+        'vtype': vtype,
         'vno': vno,
         'status': status,
+        'gender': gender,
         'uid': uid,
         'uuid': uuuid!,
       };
@@ -160,14 +164,14 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<bool> updateUser(String name, String phoneNo, String college) async {
+  Future<bool> updateUser(String name, String phoneNo, String gender) async {
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
       users.doc(_auth.currentUser?.uid).update({
         "Name": name,
+        "Gender": gender,
         "PhoneNo": phoneNo,
-        "College": college,
       });
       return true;
     } catch (e) {
@@ -177,13 +181,14 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<bool> updateVehicle(String vname, String vNo) async {
+  Future<bool> updateVehicle(String vtype, String vNo, String college) async {
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
       users.doc(_auth.currentUser?.uid).update({
         'VehicleNo': vNo,
-        'VehicleName': vname,
+        'VehicleType': vtype,
+        "College": college,
       });
       return true;
     } catch (e) {

@@ -14,11 +14,11 @@ class ProfileDetailsPage extends StatefulWidget {
 
 class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
   final TextEditingController _namecontroller = TextEditingController();
+  final TextEditingController _gendercontroller = TextEditingController();
   final TextEditingController _phoneNocontroller = TextEditingController();
-  final TextEditingController _collegecontroller = TextEditingController();
   String get name => _namecontroller.text;
   String get phoneNo => _phoneNocontroller.text;
-  String get cllg => _collegecontroller.text;
+  String get gender => _gendercontroller.text;
   @override
   void initState() {
     getDetails();
@@ -29,12 +29,12 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
     setState(() {
       _namecontroller.text = temp['name'].toString();
       _phoneNocontroller.text = temp['num'].toString();
-      _collegecontroller.text = temp['cllg'].toString();
+      _gendercontroller.text = temp['gender'].toString();
     });
   }
 
   Future<bool> updateDetails() async{
-      var update = await widget.auth.updateUser(name, phoneNo, cllg);
+      var update = await widget.auth.updateUser(name, phoneNo, gender);
       return update;
   }
 
@@ -117,7 +117,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                               text: TextSpan(
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: 'College: ',
+                                    text: 'Gender: ',
                                     style: kprofileDescriptionText,
                                   ),
                                 ],
@@ -126,20 +126,20 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                             const SizedBox(height: 9.0),
                             DropdownButtonFormField(
                               decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.business),
+                                prefixIcon: const Icon(Icons.male),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              value: cllg.isEmpty?null:cllg,
+                              value: gender.isEmpty?null:gender,
                               items:
-                                  ['DYPCOE', 'DYPIMR', 'DYPARC'].map((college) {
+                                  ['Male', 'Female'].map((gen) {
                                 return DropdownMenuItem(
-                                  value: college,
-                                  child: Text(college),
+                                  value: gen,
+                                  child: Text(gen),
                                   onTap: () {
                                     setState(() {
-                                      _collegecontroller.text = college;
+                                      _gendercontroller.text = gen;
                                     });
                                   },
                                 );

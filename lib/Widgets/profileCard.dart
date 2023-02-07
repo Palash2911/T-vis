@@ -14,6 +14,8 @@ class ProfileCard extends StatefulWidget {
 class _ProfileCardState extends State<ProfileCard> {
   String name = "Your Name";
   String uid = "";
+  bool gender = true;
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +27,9 @@ class _ProfileCardState extends State<ProfileCard> {
     setState(() {
       name = temp['name'].toString();
       uid = temp['uid'].toString();
+      if (temp['gender'].toString() == "Male") {
+        gender = false;
+      }
     });
   }
 
@@ -58,16 +63,29 @@ class _ProfileCardState extends State<ProfileCard> {
               ),
             ],
           ),
-          Container(
-              margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
-              height: 100,
-              width: 100,
-              child: const CircleAvatar(
-                backgroundImage: AssetImage(
-                  'assets/images/profile.png',
+          gender
+              ? Container(
+                  margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
+                  height: 100,
+                  width: 100,
+                  child: const CircleAvatar(
+                    backgroundImage: AssetImage(
+                      'assets/images/profilefemale.png',
+                    ),
+                    radius: 70,
+                  ),
+                )
+              : Container(
+                  margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
+                  height: 100,
+                  width: 100,
+                  child: const CircleAvatar(
+                    backgroundImage: AssetImage(
+                      'assets/images/profilemale.png',
+                    ),
+                    radius: 70,
+                  ),
                 ),
-                radius: 70,
-              )),
         ],
       ),
     );

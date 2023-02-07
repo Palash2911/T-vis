@@ -13,9 +13,11 @@ class vehicleDetailsPage extends StatefulWidget {
 }
 
 class _vehicleDetailsPageState extends State<vehicleDetailsPage> {
-  final TextEditingController _vehNamecontroller = TextEditingController();
+  final TextEditingController _vehTypecontroller = TextEditingController();
   final TextEditingController _vehNocontroller = TextEditingController();
-  String get vehName => _vehNamecontroller.text;
+  final TextEditingController _collegecontroller = TextEditingController();
+  String get cllg => _collegecontroller.text;
+  String get vehType => _vehTypecontroller.text;
   String get vehNo => _vehNocontroller.text;
 
   @override
@@ -26,13 +28,14 @@ class _vehicleDetailsPageState extends State<vehicleDetailsPage> {
   Future<void> getDetails() async {
     var temp = await widget.auth.getUserDetails("");
     setState(() {
-      _vehNamecontroller.text = temp['vname'].toString();
+      _vehTypecontroller.text = temp['vtype'].toString();
       _vehNocontroller.text = temp['vno'].toString();
+      _collegecontroller.text = temp['cllg'].toString();
     });
   }
 
   Future<bool> updateDetails() async {
-    var update = await widget.auth.updateVehicle(vehName, vehNo);
+    var update = await widget.auth.updateVehicle(vehType, vehNo, cllg);
     return update;
   }
 
@@ -42,7 +45,7 @@ class _vehicleDetailsPageState extends State<vehicleDetailsPage> {
       appBar: AppBar(
         title: const Text("Vehicle Details"),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded),
+          icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -71,28 +74,40 @@ class _vehicleDetailsPageState extends State<vehicleDetailsPage> {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Vehicle Name',
+                                    text: 'Vehicle Type',
                                     style: kprofileDescriptionText,
                                   ),
                                 ],
                               ),
                             ),
                             const SizedBox(height: 8.0),
-                            TextField(
-                              controller: _vehNamecontroller,
-                              keyboardType: TextInputType.name,
+                            DropdownButtonFormField(
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(Icons.directions_car),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
+                              value: vehType.isEmpty ? null : vehType,
+                              items: ['2 Wheeler', '4 Wheeler'].map((vt) {
+                                return DropdownMenuItem(
+                                  value: vt,
+                                  child: Text(vt),
+                                  onTap: () {
+                                    setState(() {
+                                      _vehTypecontroller.text = vt;
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                              onChanged: (value) {},
                             ),
                             const SizedBox(height: 8.0),
                             RichText(
                               text: TextSpan(
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: 'Number: ',
+                                    text: 'Vehicle Number: ',
                                     style: kprofileDescriptionText,
                                   ),
                                 ],
@@ -112,6 +127,38 @@ class _vehicleDetailsPageState extends State<vehicleDetailsPage> {
                               maxLength: 13,
                             ),
                             const SizedBox(height: 8.0),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'College',
+                                    style: kprofileDescriptionText,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.directions_car),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              value: cllg.isEmpty ? null : cllg,
+                              items: ['DYPCOE', 'DYPIMR', 'DYPARC'].map((clg) {
+                                return DropdownMenuItem(
+                                  value: clg,
+                                  child: Text(clg),
+                                  onTap: () {
+                                    setState(() {
+                                      _collegecontroller.text = clg;
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                              onChanged: (value) {},
+                            ),
                           ],
                         ),
                       ),
