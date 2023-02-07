@@ -84,7 +84,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AdminProfile(),
+                      builder: (context) => AdminProfile(
+                        auth: Auth(),
+                      ),
                     ),
                   );
                 }),

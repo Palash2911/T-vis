@@ -5,37 +5,37 @@ import 'package:tvis/constants.dart';
 import '../../Services/firebaseAuth.dart';
 
 class AdminProfile extends StatefulWidget {
-  
-
+  final Auth auth;
+  AdminProfile({required this.auth});
   @override
   State<AdminProfile> createState() => _AdminProfileState();
 }
 
 class _AdminProfileState extends State<AdminProfile> {
   final TextEditingController _namecontroller = TextEditingController();
+  final TextEditingController _gendercontroller = TextEditingController();
   final TextEditingController _phoneNocontroller = TextEditingController();
-  final TextEditingController _collegecontroller = TextEditingController();
   String get name => _namecontroller.text;
   String get phoneNo => _phoneNocontroller.text;
-  String get cllg => _collegecontroller.text;
+  String get gender => _gendercontroller.text;
   @override
   void initState() {
-    // getDetails();
+    getDetails();
   }
 
-  // Future<void> getDetails() async {
-  //   var temp = await widget.auth.getUserDetails();
-  //   setState(() {
-  //     _namecontroller.text = temp['name'].toString();
-  //     _phoneNocontroller.text = temp['num'].toString();
-  //     _collegecontroller.text = temp['cllg'].toString();
-  //   });
-  // }
+  Future<void> getDetails() async {
+    var temp = await widget.auth.getUserDetails("");
+    setState(() {
+      _namecontroller.text = temp['name'].toString();
+      _phoneNocontroller.text = temp['num'].toString();
+      _gendercontroller.text = temp['gender'].toString();
+    });
+  }
 
-  // Future<bool> updateDetails() async {
-  //   var update = await widget.auth.updateUser(name, phoneNo, cllg);
-  //   return update;
-  // }
+  Future<bool> updateDetails() async{
+    var update = await widget.auth.updateUser(name, phoneNo, gender);
+    return update;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +116,7 @@ class _AdminProfileState extends State<AdminProfile> {
                               text: TextSpan(
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: 'College: ',
+                                    text: 'Gender: ',
                                     style: kprofileDescriptionText,
                                   ),
                                 ],
@@ -125,20 +125,20 @@ class _AdminProfileState extends State<AdminProfile> {
                             const SizedBox(height: 9.0),
                             DropdownButtonFormField(
                               decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.business),
+                                prefixIcon: const Icon(Icons.male),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              value: cllg.isEmpty ? null : cllg,
+                              value: gender.isEmpty?null:gender,
                               items:
-                                  ['DYPCOE', 'DYPIMR', 'DYPARC'].map((college) {
+                              ['Male', 'Female'].map((gen) {
                                 return DropdownMenuItem(
-                                  value: college,
-                                  child: Text(college),
+                                  value: gen,
+                                  child: Text(gen),
                                   onTap: () {
                                     setState(() {
-                                      _collegecontroller.text = college;
+                                      _gendercontroller.text = gen;
                                     });
                                   },
                                 );
@@ -152,35 +152,36 @@ class _AdminProfileState extends State<AdminProfile> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: ElevatedButton(
-                        onPressed: (){},
-                        //  async {
-                        //   var up = await updateDetails();
-                        //   if (up) {
-                        //     Fluttertoast.showToast(
-                        //       msg: "Updated Successfully",
-                        //       toastLength: Toast.LENGTH_SHORT,
-                        //       timeInSecForIosWeb: 1,
-                        //       backgroundColor: Colors.black,
-                        //       textColor: Colors.white,
-                        //       fontSize: 16.0,
-                        //     );
-                        //   } else {
-                        //     Fluttertoast.showToast(
-                        //       msg: "Some error occured",
-                        //       toastLength: Toast.LENGTH_SHORT,
-                        //       timeInSecForIosWeb: 1,
-                        //       backgroundColor: Colors.black,
-                        //       textColor: Colors.white,
-                        //       fontSize: 16.0,
-                        //     );
-                        //   }
-                        // },
+                        onPressed: () async{
+                          var up = await updateDetails();
+                          if(up)
+                          {
+                            Fluttertoast.showToast(
+                              msg: "Updated Successfully",
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          }
+                          else
+                          {
+                            Fluttertoast.showToast(
+                              msg: "Some error occured",
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          }
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(9.0),
                           child: Text(
                             "Save Details",
-                            style:
-                                kprofileDescriptionText.merge(const TextStyle(
+                            style: kprofileDescriptionText.merge(const TextStyle(
                               color: Colors.white,
                             )),
                           ),

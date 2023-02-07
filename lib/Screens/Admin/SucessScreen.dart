@@ -25,11 +25,11 @@ class _SuccessScreenState extends State<SuccessScreen> {
     super.initState();
   }
 
-  Future<void> _updateSt(String status) async {
+  Future<void> _updateSt(String status, BuildContext ctx) async {
     var temp = await widget.auth.updateStatus(status, widget.uid.toString());
     if (temp) {
       Future.delayed(const Duration(milliseconds: 1100), () {
-        Navigator.of(context).pushReplacement(
+        Navigator.of(ctx).pushReplacement(
           MaterialPageRoute(
             builder: (ctx) => AdminHomeScreen(
               auth: Auth(),
@@ -104,7 +104,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                             );
                           },
                         );
-                        _updateSt("Decline");
+                        _updateSt("Decline", context);
                       },
                       child: st
                           ? Text(
@@ -129,7 +129,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                             );
                           },
                         );
-                        st ? _updateSt("allowExit") : _updateSt("allowEntry");
+                        st ? _updateSt("allowExit", context) : _updateSt("allowEntry", context);
                       },
                       child: st
                           ? Text("Allow Exit", style: kButtonTextStyle)

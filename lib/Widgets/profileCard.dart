@@ -30,6 +30,9 @@ class _ProfileCardState extends State<ProfileCard> {
       if (temp['gender'].toString() == "Male") {
         gender = false;
       }
+      else{
+        gender = true;
+      }
     });
   }
 
