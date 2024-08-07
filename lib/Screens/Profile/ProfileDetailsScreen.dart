@@ -81,6 +81,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                             ),
                             const SizedBox(height: 8.0),
                             TextField(
+                              enabled: false,
                               controller: _namecontroller,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
@@ -88,6 +89,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10)),
                               ),
+                              style: ktitleTextStyle,
                             ),
                             const SizedBox(height: 8.0),
                             RichText(
@@ -102,6 +104,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                             ),
                             const SizedBox(height: 9.0),
                             TextField(
+                              enabled: false,
                               controller: _phoneNocontroller,
                               decoration: InputDecoration(
                                 counterText: '',
@@ -111,6 +114,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                               ),
                               keyboardType: TextInputType.phone,
                               maxLength: 13,
+                              style: ktitleTextStyle,
                             ),
                             const SizedBox(height: 8.0),
                             RichText(
@@ -123,72 +127,85 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 9.0),
-                            DropdownButtonFormField(
+                            TextField(
+                              enabled: false,
+                              controller: _gendercontroller,
                               decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.male),
+                                counterText: '',
+                                prefixIcon: gender=='Male'?const Icon(Icons.male):const Icon(Icons.female),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
+                                    borderRadius: BorderRadius.circular(10)),
                               ),
-                              value: gender.isEmpty?null:gender,
-                              items:
-                                  ['Male', 'Female'].map((gen) {
-                                return DropdownMenuItem(
-                                  value: gen,
-                                  child: Text(gen),
-                                  onTap: () {
-                                    setState(() {
-                                      _gendercontroller.text = gen;
-                                    });
-                                  },
-                                );
-                              }).toList(),
-                              onChanged: (value) {},
+                              keyboardType: TextInputType.name,
+                              maxLength: 13,
+                              style: ktitleTextStyle,
                             ),
+                            const SizedBox(height: 9.0),
+                            // DropdownButtonFormField(
+                            //   decoration: InputDecoration(
+                            //     prefixIcon: const Icon(Icons.male),
+                            //     border: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(10),
+                            //     ),
+                            //   ),
+                            //   value: gender.isEmpty?null:gender,
+                            //   items:
+                            //       ['Male', 'Female'].map((gen) {
+                            //     return DropdownMenuItem(
+                            //       value: gen,
+                            //       child: Text(gen),
+                            //       onTap: () {
+                            //         setState(() {
+                            //           _gendercontroller.text = gen;
+                            //         });
+                            //       },
+                            //     );
+                            //   }).toList(),
+                            //   onChanged: (value) {},
+                            // ),
                           ],
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ElevatedButton(
-                        onPressed: () async{
-                          var up = await updateDetails();
-                          if(up)
-                            {
-                              Fluttertoast.showToast(
-                                  msg: "Updated Successfully",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.black,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                              );
-                            }
-                          else
-                            {
-                              Fluttertoast.showToast(
-                                msg: "Some error occured",
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                            }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(9.0),
-                          child: Text(
-                            "Save Details",
-                            style: kprofileDescriptionText.merge(const TextStyle(
-                              color: Colors.white,
-                            )),
-                          ),
-                        ),
-                      ),
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.all(16.0),
+                    //   child: ElevatedButton(
+                    //     onPressed: () async{
+                    //       var up = await updateDetails();
+                    //       if(up)
+                    //         {
+                    //           Fluttertoast.showToast(
+                    //               msg: "Updated Successfully",
+                    //               toastLength: Toast.LENGTH_SHORT,
+                    //               timeInSecForIosWeb: 1,
+                    //               backgroundColor: Colors.black,
+                    //               textColor: Colors.white,
+                    //               fontSize: 16.0,
+                    //           );
+                    //         }
+                    //       else
+                    //         {
+                    //           Fluttertoast.showToast(
+                    //             msg: "Some error occured",
+                    //             toastLength: Toast.LENGTH_SHORT,
+                    //             timeInSecForIosWeb: 1,
+                    //             backgroundColor: Colors.black,
+                    //             textColor: Colors.white,
+                    //             fontSize: 16.0,
+                    //           );
+                    //         }
+                    //     },
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(9.0),
+                    //       child: Text(
+                    //         "Save Details",
+                    //         style: kprofileDescriptionText.merge(const TextStyle(
+                    //           color: Colors.white,
+                    //         )),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),

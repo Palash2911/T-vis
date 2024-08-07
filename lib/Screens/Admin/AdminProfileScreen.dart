@@ -32,7 +32,7 @@ class _AdminProfileState extends State<AdminProfile> {
     });
   }
 
-  Future<bool> updateDetails() async{
+  Future<bool> updateDetails() async {
     var update = await widget.auth.updateUser(name, phoneNo, gender);
     return update;
   }
@@ -130,9 +130,8 @@ class _AdminProfileState extends State<AdminProfile> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              value: gender.isEmpty?null:gender,
-                              items:
-                              ['Male', 'Female'].map((gen) {
+                              value: gender.isEmpty ? null : gender,
+                              items: ['Male', 'Female'].map((gen) {
                                 return DropdownMenuItem(
                                   value: gen,
                                   child: Text(gen),
@@ -152,10 +151,9 @@ class _AdminProfileState extends State<AdminProfile> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: ElevatedButton(
-                        onPressed: () async{
+                        onPressed: () async {
                           var up = await updateDetails();
-                          if(up)
-                          {
+                          if (up) {
                             Fluttertoast.showToast(
                               msg: "Updated Successfully",
                               toastLength: Toast.LENGTH_SHORT,
@@ -164,9 +162,7 @@ class _AdminProfileState extends State<AdminProfile> {
                               textColor: Colors.white,
                               fontSize: 16.0,
                             );
-                          }
-                          else
-                          {
+                          } else {
                             Fluttertoast.showToast(
                               msg: "Some error occured",
                               toastLength: Toast.LENGTH_SHORT,
@@ -181,9 +177,11 @@ class _AdminProfileState extends State<AdminProfile> {
                           padding: const EdgeInsets.all(9.0),
                           child: Text(
                             "Save Details",
-                            style: kprofileDescriptionText.merge(const TextStyle(
-                              color: Colors.white,
-                            )),
+                            style: kprofileDescriptionText.merge(
+                              const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),

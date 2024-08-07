@@ -18,7 +18,8 @@ class AdminHomeScreen extends StatefulWidget {
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   final TextEditingController _qrIdController = TextEditingController();
   String get qrId => _qrIdController.text;
-  var vehCnt = 0;
+  var twoCnt = 0;
+  var fourCnt = 0;
 
   @override
   void initState() {
@@ -29,7 +30,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   Future<void> _getVeh() async {
     var temp = await widget.auth.noOfVehicles();
     setState(() {
-      vehCnt = temp;
+      twoCnt = temp['2W']!;
+      fourCnt = temp['4W']!;
     });
   }
 
@@ -99,121 +101,140 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SafeArea(
-        child: Container(
-          color: kSecondaryColor,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 32.0,
-                  vertical: 30.0,
-                ),
-                decoration: kBorder,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.receipt_long_rounded,
-                    size: 50.0,
-                    color: kPrimaryColor,
-                  ),
-                  title: Text(
-                    'Vehicles in campus',
-                    style: ktitleTextStyle,
-                  ),
-                  subtitle: const Text('Today'),
-                  trailing: Text(
-                    '$vehCnt',
-                    style: ktitleTextStyle,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(
-                    horizontal: 32.0, vertical: 10.0),
-                decoration: kBorder,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Card(
-                      elevation: 0.0,
-                      color: Colors.transparent,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'QR ID ',
-                                    style: kprofileDescriptionText,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 9.0),
-                            TextField(
-                              controller: _qrIdController,
-                              decoration: InputDecoration(
-                                counterText: '',
-                                prefixIcon: const Icon(Icons.numbers_outlined),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              // keyboardType: TextInputType.phone,
-                              maxLength: 7,
-                            ),
-                          ],
-                        ),
-                      ),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Container(
+            color: kSecondaryColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.fromLTRB(32.0, 20, 32.0, 10),
+                  decoration: kBorder,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.receipt_long_rounded,
+                      size: 50.0,
+                      color: kPrimaryColor,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ElevatedButton(
-                        onPressed: _getDetails,
-                        child: Padding(
-                          padding: const EdgeInsets.all(9.0),
-                          child: Text(
-                            "Enter ",
-                            style:
-                                kprofileDescriptionText.merge(const TextStyle(
-                              color: Colors.white,
-                            )),
-                          ),
-                        ),
-                      ),
+                    title: Text(
+                      '4 Wheelers in campus',
+                      style: ktitleTextStyle,
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 180,
-                width: 180,
-                child: FittedBox(
-                  child: FloatingActionButton.extended(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const QrScan(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.qr_code_scanner_rounded,
-                      size: 30,
-                    ),
-                    label: Text(
-                      "Scan QR",
+                    subtitle: const Text('Today'),
+                    trailing: Text(
+                      '$fourCnt',
                       style: ktitleTextStyle,
                     ),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  margin: const EdgeInsets.fromLTRB(32.0, 10, 32.0, 30),
+                  decoration: kBorder,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.receipt_long_rounded,
+                      size: 50.0,
+                      color: kPrimaryColor,
+                    ),
+                    title: Text(
+                      '2 Wheelers in campus',
+                      style: ktitleTextStyle,
+                    ),
+                    subtitle: const Text('Today'),
+                    trailing: Text(
+                      '$twoCnt',
+                      style: ktitleTextStyle,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 32.0, vertical: 10.0),
+                  decoration: kBorder,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Card(
+                        elevation: 0.0,
+                        color: Colors.transparent,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: 'QR ID ',
+                                      style: kprofileDescriptionText,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 9.0),
+                              TextField(
+                                controller: _qrIdController,
+                                decoration: InputDecoration(
+                                  counterText: '',
+                                  prefixIcon: const Icon(Icons.numbers_outlined),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                // keyboardType: TextInputType.phone,
+                                maxLength: 7,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ElevatedButton(
+                          onPressed: _getDetails,
+                          child: Padding(
+                            padding: const EdgeInsets.all(9.0),
+                            child: Text(
+                              "Enter ",
+                              style:
+                                  kprofileDescriptionText.merge(const TextStyle(
+                                color: Colors.white,
+                              )),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 180,
+                  width: 180,
+                  child: FittedBox(
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const QrScan(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.qr_code_scanner_rounded,
+                        size: 30,
+                      ),
+                      label: Text(
+                        "Scan QR",
+                        style: ktitleTextStyle,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

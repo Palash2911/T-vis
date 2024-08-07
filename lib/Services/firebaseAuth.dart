@@ -14,8 +14,8 @@ abstract class AuthClass {
   Future<void> signOut();
   Future<bool> verifyOtp(String otp);
   Future<bool> checkUser();
-  Future<String> registerUser(
-      String name, String vehicleNo, String vehicleType, String college, String gender);
+  Future<String> registerUser(String name, String vehicleNo, String vehicleType,
+      String college, String gender);
   Future<bool> updateUser(String name, String phoneNo, String gender);
   Future<bool> updateVehicle(String vType, String vNo, String college);
   Future<Map<String, Object>> getUserDetails(String uid);
@@ -23,7 +23,7 @@ abstract class AuthClass {
   List<Trips> tripsFromFirestore(QuerySnapshot snapshot);
   Stream<List<Trips>> listTrips();
   Future<int> noOfTrips();
-  Future<int> noOfVehicles();
+  Future<Map<String, int>> noOfVehicles();
 }
 
 class Auth implements AuthClass {
@@ -94,8 +94,8 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<String> registerUser(
-      String name, String vehicleNo, String vehicleType, String college, String gender) async {
+  Future<String> registerUser(String name, String vehicleNo, String vehicleType,
+      String college, String gender) async {
     try {
       final auth = FirebaseAuth.instance.currentUser;
       CollectionReference users =
@@ -263,19 +263,32 @@ class Auth implements AuthClass {
   }
 
   @override
-  Future<int> noOfVehicles() async {
+  Future<Map<String, int>> noOfVehicles() async {
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
-      var vehCount;
+      var twoWcount;
+      var fourWcount;
       await users
           .where("Status", isEqualTo: true)
+          .where("VehicleType", isEqualTo: "2 Wheeler")
           .get()
-          .then((value) => vehCount = value.docs.length);
-      return vehCount;
+          .then((value) => twoWcount = value.docs.length);
+      await users
+          .where("Status", isEqualTo: true)
+          .where("VehicleType", isEqualTo: "4 Wheeler")
+          .get()
+          .then((value) => fourWcount = value.docs.length);
+      print(twoWcount);
+      print(fourWcount);
+
+      return {
+        '2W': twoWcount,
+        '4W': fourWcount,
+      };
     } catch (e) {
       print(e);
-      return 0;
+      return {};
     }
   }
 }

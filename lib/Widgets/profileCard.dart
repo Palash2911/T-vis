@@ -27,13 +27,19 @@ class _ProfileCardState extends State<ProfileCard> {
     setState(() {
       name = temp['name'].toString();
       uid = temp['uid'].toString();
-      if (temp['gender'].toString() == "Male") {
-        gender = false;
-      }
-      else{
-        gender = true;
-      }
     });
+    if(temp['gender'].toString() == "Male")
+      {
+        setState(() {
+          gender = false;
+        });
+      }
+    else
+      {
+        setState(() {
+          gender = true;
+        });
+      }
   }
 
   @override
@@ -66,14 +72,13 @@ class _ProfileCardState extends State<ProfileCard> {
               ),
             ],
           ),
-          gender
-              ? Container(
+          gender ? Container(
                   margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
                   height: 100,
                   width: 100,
                   child: const CircleAvatar(
                     backgroundImage: AssetImage(
-                      'assets/images/profilefemale.png',
+                      'assets/images/female.png',
                     ),
                     radius: 70,
                   ),
@@ -84,7 +89,7 @@ class _ProfileCardState extends State<ProfileCard> {
                   width: 100,
                   child: const CircleAvatar(
                     backgroundImage: AssetImage(
-                      'assets/images/profilemale.png',
+                      'assets/images/male.png',
                     ),
                     radius: 70,
                   ),
